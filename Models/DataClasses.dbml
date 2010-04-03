@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="www.caradocmission.org" EntityNamespace="mjjames.DataEntities" ContextNamespace="mjjames.DataContexts" Class="CMSDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=www.caradocmission.org;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="www_caradocmission_orgConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.articles" Member="Articles">
+    <Type Name="Article">
+      <Column Name="article_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="showonhome" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sortorder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="start_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="include_in_feed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="virtualurl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_article" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.testimonies" Member="Testimonies">
+    <Type Name="Testimony">
+      <Column Name="testimony_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="project_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="video_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="project_testimony" Member="Project" Storage="_project" ThisKey="project_fkey" OtherKey="project_key" Type="Project" IsForeignKey="true" />
+      <Association Name="site_testimony" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.banners" Member="Banners">
+    <Type Name="Banner">
+      <Column Name="bannerdid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="alttext" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="category" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="randomness" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_banner" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.keyvalues" Member="KeyValues">
+    <Type Name="KeyValue">
+      <Column Name="keyvalue_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="link_fkey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="key_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="link_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="lookup_keyvalue" Member="lookup" ThisKey="link_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="lookup_keyvalue1" Member="Lookup1" Storage="_lookup1" ThisKey="key_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.lookup" Member="Lookups">
+    <Type Name="Lookup">
+      <Column Name="lookup_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="lookup_id" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="lookup_keyvalue" Member="keyvalues" ThisKey="lookup_key" OtherKey="link_lookup" Type="KeyValue" />
+      <Association Name="lookup_keyvalue1" Member="KeyValues1" Storage="_keyvalues1" ThisKey="lookup_key" OtherKey="key_lookup" Type="KeyValue" />
+      <Association Name="lookup_marketingsite" Member="MarketingSites" Storage="_marketingsites" ThisKey="lookup_key" OtherKey="template_lookup" Type="MarketingSite" />
+      <Association Name="lookup_media" Member="Medias" Storage="_medias" ThisKey="lookup_key" OtherKey="mediatype_lookup" Type="Media" />
+      <Association Name="lookup_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="lookup_key" OtherKey="linktype_lookup" Type="MediaLink" />
+    </Type>
+  </Table>
+  <Table Name="dbo.marketingsites" Member="MarketingSites">
+    <Type Name="MarketingSite">
+      <Column Name="marketingsite_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="host_name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="body" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="short_description" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="template_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="lookup_marketingsite" Member="Lookup" Storage="_lookup" ThisKey="template_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="site_marketingsite" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.media" Member="Medias">
+    <Type Name="Media">
+      <Column Name="media_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="filename" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="mediatype_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="media_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="media_key" OtherKey="media_fkey" Type="MediaLink" />
+      <Association Name="lookup_media" Member="Lookup" Storage="_lookup" ThisKey="mediatype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="site_media" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.media_links" Member="MediaLinks">
+    <Type Name="MediaLink">
+      <Column Name="medialink_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="media_fkey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="link_fkey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="linktype_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="lookup_media_link" Member="Lookup" Storage="_lookup" ThisKey="linktype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="media_media_link" Member="Media" Storage="_media" ThisKey="media_fkey" OtherKey="media_key" Type="Media" IsForeignKey="true" />
+      <Association Name="site_media_link" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NewsletterReciprients" Member="NewsletterReciprients">
+    <Type Name="NewsletterReciprient">
+      <Column Name="reciprient_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="confirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_NewsletterReciprient" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Newsletters" Member="Newsletters">
+    <Type Name="Newsletter">
+      <Column Name="newsletter_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="subject" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="body" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="date_sent" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="date_created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_Newsletter" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.offers" Member="Offers">
+    <Type Name="Offer">
+      <Column Name="offer_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="offer_start" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="offer_end" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="showonhome" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="showinfeed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_offer" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pages" Member="Pages">
+    <Type Name="Page">
+      <Column Name="page_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="page_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pageid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="navtitle" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="accesskey" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="metadescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="metakeywords" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="showinnav" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="showinfeaturednav" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="showonhome" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="showinfooter" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="sortorder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="linkurl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="lastmodified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="page_url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="passwordprotect" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="site_page" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.projects" Member="Projects">
+    <Type Name="Project">
+      <Column Name="project_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="include_in_rss" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="photogallery_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="video_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="project_testimony" Member="Testimonies" Storage="_testimonies" ThisKey="project_key" OtherKey="project_fkey" Type="Testimony" />
+      <Association Name="site_project" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.sites" Member="Sites">
+    <Type Name="Site">
+      <Column Name="site_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="hostname" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="site_article" Member="Articles" Storage="_articles" ThisKey="site_key" OtherKey="site_fkey" Type="Article" />
+      <Association Name="site_testimony" Member="Testimonies" Storage="_testimonies" ThisKey="site_key" OtherKey="site_fkey" Type="Testimony" />
+      <Association Name="site_banner" Member="Banners" Storage="_banners" ThisKey="site_key" OtherKey="site_fkey" Type="Banner" />
+      <Association Name="site_marketingsite" Member="MarketingSites" Storage="_marketingsites" ThisKey="site_key" OtherKey="site_fkey" Type="MarketingSite" />
+      <Association Name="site_media" Member="Medias" Storage="_medias" ThisKey="site_key" OtherKey="site_fkey" Type="Media" />
+      <Association Name="site_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="site_key" OtherKey="site_fkey" Type="MediaLink" />
+      <Association Name="site_NewsletterReciprient" Member="NewsletterReciprients" ThisKey="site_key" OtherKey="site_fkey" Type="NewsletterReciprient" />
+      <Association Name="site_Newsletter" Member="Newsletters" ThisKey="site_key" OtherKey="site_fkey" Type="Newsletter" />
+      <Association Name="site_offer" Member="Offers" Storage="_offers" ThisKey="site_key" OtherKey="site_fkey" Type="Offer" />
+      <Association Name="site_page" Member="Pages" Storage="_pages" ThisKey="site_key" OtherKey="site_fkey" Type="Page" />
+      <Association Name="site_project" Member="Projects" Storage="_projects" ThisKey="site_key" OtherKey="site_fkey" Type="Project" />
+    </Type>
+  </Table>
+</Database>

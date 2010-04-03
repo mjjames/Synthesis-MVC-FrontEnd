@@ -1,0 +1,4 @@
+<Modules>
+  <Module PersistentId="D1305212-8E83-481E-B32E-6CAE5AB1F799" ModuleId="CaradocMission" />
+  <Module PersistentId="9AA4B560-89D3-4AD3-958A-9A48C6E73041" ModuleId="MVC MultiTenant Controllers and Models" />
+</Modules>

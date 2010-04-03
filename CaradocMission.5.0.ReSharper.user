@@ -1,0 +1,91 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:ImageResult.cs" caret="377" fromTop="18" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:ImageResizerController.cs" caret="466" fromTop="15" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:FormsController.cs" caret="3381" fromTop="7" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/d:Views/d:Pages/f:Home.aspx" caret="0" fromTop="0" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Global.asax.cs" caret="471" fromTop="4" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/d:Views/d:Shared/f:NotFound.aspx" caret="335" fromTop="6" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:DataClasses.designer.cs" caret="93147" fromTop="25" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:PageRepository.cs" caret="1107" fromTop="49" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:PageModel.cs" caret="124" fromTop="2" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Web.config" caret="4991" fromTop="20" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/d:DTO/f:PageDTO.cs" caret="228" fromTop="8" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="2935" fromTop="12" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:ImageResult.cs" caret="111" fromTop="4" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:ImageResult.cs" caret="356" fromTop="17" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:PageModel.cs" caret="360" fromTop="0" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Global.asax.cs" caret="13" fromTop="0" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Web.config" caret="7799" fromTop="26" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Web.config" caret="3087" fromTop="29" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Global.asax.cs" caret="1293" fromTop="21" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="3090" fromTop="31" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Web.config" caret="4775" fromTop="21" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Web.config" caret="4742" fromTop="16" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/f:Global.asax.cs" caret="471" fromTop="4" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="929" fromTop="18" />
+      <File id="D1305212-8E83-481E-B32E-6CAE5AB1F799/d:Views/d:Shared/f:NotFound.aspx" caret="277" fromTop="4" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/d:DTO/f:PageDTO.cs" caret="994" fromTop="35" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/d:DTO/f:PageDTO.cs" caret="224" fromTop="10" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/d:DTO/f:PageDTO.cs" caret="994" fromTop="32" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/d:DTO/f:PageDTO.cs" caret="13" fromTop="0" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:PageModel.cs" caret="263" fromTop="3" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Models/f:PageModel.cs" caret="174" fromTop="3" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="2447" fromTop="18" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="2968" fromTop="18" />
+      <File id="9AA4B560-89D3-4AD3-958A-9A48C6E73041/d:Controllers/f:PagesController.cs" caret="1949" fromTop="11" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir>C:\Program Files (x86)\NUnit 2.5.3\bin\net-2.0\</NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="CaradocMission" priority="1" />
+      <Item value="CMSDataContext`0" priority="0" />
+      <Item value="mjjames" priority="1" />
+      <Item value="using" priority="1" />
+      <Item value="System" priority="2" />
+      <Item value="Web" priority="2" />
+      <Item value="HttpResponse`0" priority="0" />
+      <Item value="newPage" priority="0" />
+      <Item value="StringComparison`0" priority="1" />
+      <Item value="templateView" priority="0" />
+      <Item value="routes" priority="0" />
+      <Item value="id" priority="0" />
+      <Item value="public" priority="11" />
+      <Item value="string" priority="4" />
+      <Item value="int" priority="1" />
+      <Item value="char" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:mjjames.Models.PageModel">
+      <Item value="pageid" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="Equals`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.StringComparison">
+      <Item value="OrdinalIgnoreCase" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Web.Routing.RouteCollection">
+      <Item value="IgnoreRoute`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>
