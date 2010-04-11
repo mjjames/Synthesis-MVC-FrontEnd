@@ -32,6 +32,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.GData.AccessControl, Version=1.4.0.2, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\Google.GData.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Calendar, Version=1.4.0.2, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\Google.GData.Calendar.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=1.4.0.2, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=1.4.0.2, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.GoogleBase, Version=1.4.0.2, Culture=neutral, PublicKeyToken=b361faa2ad5bd3db, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\Google.GData.GoogleBase.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External References\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="mjjames.BibleGateway, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BibleGatewayWrapper\BibleGateway\bin\Debug\mjjames.BibleGateway.dll</HintPath>
+    </Reference>
+    <Reference Include="mjjames.GoogleCalendarWrapper">
+      <HintPath>..\..\GoogleCalendarGateway\GoogleCalendarWrapper\bin\Debug\mjjames.GoogleCalendarWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="mjjames.Imaging">
       <HintPath>..\..\classes\Imaging\bin\Release\mjjames.Imaging.dll</HintPath>
     </Reference>
@@ -62,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Models\DTO\CalendaryEntryDTO.cs" />
     <Compile Include="Models\DTO\PageDTO.cs" />
     <Compile Include="Models\HomePageModel.cs" />
     <Compile Include="Models\ImageResult.cs" />
@@ -97,10 +129,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\classes\BibleGatewayWrapper\mjjames.BibleGateway.csproj">
-      <Project>{E8B1E4BC-0539-4CC5-AEDF-617461288E4E}</Project>
-      <Name>mjjames.BibleGateway</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\classes\mjjames.core\mjjames.core\mjjames.core.csproj">
       <Project>{B8488B6E-F1E4-4C64-A39D-5C853169DCE5}</Project>
       <Name>mjjames.core</Name>

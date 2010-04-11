@@ -14,3 +14,25 @@ F:\Development\shared\MVC MultiTenant\MVC MultiTenant Controllers and Models\bin
 F:\Development\shared\MVC MultiTenant\MVC MultiTenant Controllers and Models\bin\Debug\log4net.xml
 F:\Development\shared\MVC MultiTenant\MVC MultiTenant Controllers and Models\bin\Debug\mjjames.BibleGateway.dll
 F:\Development\shared\MVC MultiTenant\MVC MultiTenant Controllers and Models\bin\Debug\mjjames.BibleGateway.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.MVC MultiTenant Controllers and Models.dll.config
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.MVC MultiTenant Controllers and Models.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.MVC MultiTenant Controllers and Models.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.core.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.Imaging.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Recaptcha.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\log4net.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.core.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.Imaging.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Recaptcha.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\obj\Debug\ResolveAssemblyReference.cache
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\obj\Debug\mjjames.MVC MultiTenant Controllers and Models.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\obj\Debug\mjjames.MVC MultiTenant Controllers and Models.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Google.GData.AccessControl.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Google.GData.Calendar.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Google.GData.Client.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Google.GData.Extensions.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\Google.GData.GoogleBase.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.BibleGateway.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.GoogleCalendarWrapper.dll
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.BibleGateway.pdb
+F:\Development\shared\MVC MultiTenant\MVC-MultiTenant-Controllers-and-Models\bin\Debug\mjjames.GoogleCalendarWrapper.pdb
