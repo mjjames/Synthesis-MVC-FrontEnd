@@ -14,7 +14,7 @@ namespace mjjames.Models
 
 			//load our main navigation sitemap
 			var siteMap = SiteMap.Providers["siteNavigation"];
-			if (siteMap == null) //if null return an empty nav list
+			if (siteMap == null || siteMap.RootNode == null) //if null return an empty nav list
 			{
 				System.Diagnostics.Debug.WriteLine("No Site Mavigation SiteMap Found");
 				return navItems.AsQueryable();
@@ -29,9 +29,9 @@ namespace mjjames.Models
 							});
 
 			//if we have a current node use it's parent else use the root node
-			var parentNode = SiteMap.CurrentNode != null ? SiteMap.CurrentNode.ParentNode : SiteMap.RootNode;
+			var parentNode = SiteMap.CurrentNode != null && SiteMap.CurrentNode.ParentNode != null ? SiteMap.CurrentNode.ParentNode : SiteMap.RootNode;
 
-			foreach (SiteMapNode node in siteMap.GetChildNodes(SiteMap.RootNode))
+			foreach (SiteMapNode node in siteMap.RootNode.ChildNodes)
 			{
 				//skip sitemapnodes that aren't visible
 				if (node["Visible"].Equals("0")) continue;
@@ -41,7 +41,7 @@ namespace mjjames.Models
 									Description = node.Description,
 									Title = node.Title,
 									Url = node.Url,
-									CssClass = "navLink"
+									CssClass = "navItem"
 								};
 
 				navItems.Add(navItem);

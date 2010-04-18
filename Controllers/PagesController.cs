@@ -104,6 +104,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			return View(templateView, newPage);
 		}
 
-
+        /// <summary>
+        /// Returns the Calendar Month View Page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Calendar()
+        {
+            return View("Calendar");
+        }
 	}
 }
