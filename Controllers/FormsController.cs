@@ -4,13 +4,16 @@ using System.Web.Mvc;
 using mjjames.Models;
 using System.Net.Mail;
 using System.Configuration;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 
-namespace mjjames.Controllers
+namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
 	[HandleError]
 	public class FormsController : Controller
 	{
+		readonly PageRepository _pages = new PageRepository();
 		readonly NavigationRepository _navs = new NavigationRepository();
+
 
 		//
 		// GET: /ContactUsIndex/
@@ -20,9 +23,56 @@ namespace mjjames.Controllers
 		/// <returns></returns>
 		public ActionResult ContactUsIndex()
 		{
-			ViewData["MainNav"] = _navs.GetMainNavigation().ToList();
-			ViewData["FooterNav"] = _navs.GetFooterNavigation().ToList();
-			return View();
+			//bit of a trick here - load the page action result and then pull just the model out and pass that to our view
+
+			var pageData = BuildPage(_pages.GetPage("contactus"));
+
+			return View(pageData);
+		}
+
+		//converts a Page into a PageModel
+		private PageModel BuildPage(DataEntities.Page ourPage)
+		{
+			if(ourPage == null)
+			{
+				return new PageModel
+				       	{
+				       		FooterNavigation = _navs.GetFooterNavigation().ToList(),
+							MainNavigation = _navs.GetMainNavigation().ToList()
+				       	};
+			}
+
+			PageModel newPage = new HomePageModel
+			{
+				AccessKey = ourPage.accesskey,
+				Active = ourPage.active,
+				Body = ourPage.body,
+				FooterNavigation = _navs.GetFooterNavigation().ToList(),
+				LastModified = ourPage.lastmodified,
+				LinkURL = ourPage.linkurl,
+				MainNavigation = _navs.GetMainNavigation().ToList(),
+				MetaDescription = ourPage.metadescription,
+				MetaKeywords = ourPage.metakeywords,
+				NavTitle = ourPage.navtitle,
+				PageFKey = ourPage.page_fkey,
+				PageKey = ourPage.page_key,
+				PageUrl = ourPage.page_url,
+				PageID = ourPage.pageid,
+				Password = ourPage.password,
+				PasswordProtect = ourPage.passwordprotect,
+				ShowInFeaturedNav = ourPage.showinfeaturednav,
+				ShowInFooter = ourPage.showinfooter,
+				ShowInNav = ourPage.showinnav,
+				ShowOnHome = ourPage.showonhome,
+				SortOrder = ourPage.sortorder,
+				ThumbnailImage = ourPage.thumbnailimage,
+				Title = ourPage.title
+			};
+			if (!String.IsNullOrEmpty(newPage.ThumbnailImage))
+			{
+				newPage.ThumbnailImage = System.IO.Path.Combine(ConfigurationManager.AppSettings["uploaddir"], newPage.ThumbnailImage);
+			}
+			return newPage;
 		}
 
 		/// <summary>
@@ -33,9 +83,8 @@ namespace mjjames.Controllers
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult ContactUsIndex(string name, string email, string message, bool captchaValid)
 		{
-			ViewData["MainNav"] = _navs.GetMainNavigation().ToList();
-			ViewData["FooterNav"] = _navs.GetFooterNavigation().ToList();
-		
+			var pageData = BuildPage(_pages.GetPage("contactus"));
+
 			ViewData["name"] = name;
 			ViewData["email"] = email;
 			ViewData["message"] = message;
@@ -58,7 +107,7 @@ namespace mjjames.Controllers
 			// Send e-mail?
 			if (!ViewData.ModelState.IsValid)
 			{
-				return View();
+				return View(pageData);
 			}
 #if DEBUG
 			objEmail.To.Add("mike+debug@mjjames.co.uk");
@@ -78,37 +127,33 @@ namespace mjjames.Controllers
 			}
 			catch (Exception)
 			{
-				ViewData["Header"] = "Invalid Email Address, please try again";
-
-				ViewData["Message"] = String.Format("Supplied Email: {0}  <br /> Supplied Name: {1}", email, name);
+				pageData.Body = "<h2> Invalid Email Address, please try again </h2> " + String.Format("<p>Supplied Email: {0}  <br /> Supplied Name: {1}</p>", email, name);
 			}
 			objEmail.Subject = ConfigurationManager.AppSettings["enquiryEmailSubject"];
 			objEmail.Body = String.Format("{0} \r\n Name: {1} \r\n Email: {2}", message, name, email);
 			objEmail.Priority = MailPriority.High;
 			//send the message
 			var smtp = new SmtpClient {Host = "localhost"};
-#if DEBUG
-			//smtp.Host = "smtp.blueyonder.co.uk";
-#endif
+
 			if (bSendEmail)
 			{
 				try
 				{
 					smtp.Send(objEmail);
-					ViewData["header"] = "Your enquiry has been sent sucessfully - Thank You";
+					pageData.Body = "<h2> Your enquiry has been sent sucessfully - Thank You </h2>";
 				}
 				catch (Exception exc)
 				{
-					ViewData["header"] = "Your Enquiry Failed to Send:";
-					ViewData["message"] = objEmail.Body;
+					pageData.Body = "<h2> Your Enquiry Failed to Send: </h2>";
+					pageData.Body += objEmail.Body;
 #if DEBUG
-					ViewData["message"] += exc.ToString();
+					pageData.Body += exc.ToString();
 #endif
 				}
 			}
 
 
-			return View("FormComplete");
+			return View("FormComplete", pageData);
 		}
 
 	}

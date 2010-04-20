@@ -32,7 +32,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		{
 			var ourPage = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pages.GetPage("HOME") : _pages.GetPageFromUrl(id);
 			return BuildPage(ourPage);
-			
+		}
+
+		public ActionResult PageFromID(string id)
+		{
+			return BuildPage(_pages.GetPage(id));
 		}
 
 		/// <summary>
