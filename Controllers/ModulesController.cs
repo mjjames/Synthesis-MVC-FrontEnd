@@ -64,7 +64,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 .GetEvents(startDate, startDate.AddMonths(1)).Select(eventEntry => new CalendaryEntryDTO
                                                                                        {
                                                                                            Identifier = eventEntry.Id.ToString(),
-                                                                                           Description = eventEntry.Summary.Text,
+                                                                                           Description = eventEntry.Content != null ? eventEntry.Content.Content : "",
                                                                                            Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
                                                                                            Title = eventEntry.Title.Text,
                                                                                            End = eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
