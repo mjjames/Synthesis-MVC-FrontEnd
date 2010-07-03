@@ -107,7 +107,7 @@ namespace mjjames.Models
 
 
 
-		internal IEnumerable<NavigationItem> GetHomePageNavigation()
+		internal IQueryable<NavigationItem> GetHomePageNavigation()
 		{
 			var siteMap = SiteMap.Providers["homeNavigation"];
 			if (siteMap == null || siteMap.RootNode == null)
@@ -124,6 +124,44 @@ namespace mjjames.Models
 						PageKey = int.Parse(navItem.Key),
 						ImageUrl = navItem["imageURL"],
 						Url = navItem.Url
+					}).AsQueryable();
+		}
+
+		internal IQueryable<NavigationItem> GetSiteMapNavigation()
+		{
+			var siteMap = SiteMap.Providers["siteMap"];
+			if (siteMap == null || siteMap.RootNode == null)
+			{
+				return new List<NavigationItem>().AsQueryable();
+			}
+			return (from SiteMapNode navItem in siteMap.RootNode.ChildNodes
+					where navItem["Visible"].Equals("1")
+					select new NavigationItem
+					{
+						Title = navItem.Title,
+						CssClass = "sitemapNavItem navItem",
+						Description = navItem.Description,
+						PageKey = int.Parse(navItem.Key),
+						ImageUrl = navItem["imageURL"],
+						Url = navItem.Url,
+						ChildPages = navItem.ChildNodes.Cast<SiteMapNode>().Select(n => new NavigationItem{
+							PageKey = int.Parse(n.Key),
+							Title = n.Title,
+							Description = n.Description,
+							CssClass ="sitemapNavItem navItem",
+							ImageUrl = n["imageURL"],
+							Url = n.Url,
+							ChildPages = n.ChildNodes.Cast<SiteMapNode>().Select(no => new NavigationItem{
+								PageKey = int.Parse(no.Key),
+								Title = no.Title,
+								Description = no.Description,
+								CssClass ="sitemapNavItem navItem",
+								ImageUrl = no["imageURL"],
+								Url = no.Url
+							}).ToList()
+						}).ToList()
+
+
 					}).AsQueryable();
 		}
 	}

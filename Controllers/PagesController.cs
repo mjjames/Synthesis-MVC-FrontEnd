@@ -103,6 +103,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				homePage.HomeNavigation = _navs.GetHomePageNavigation().ToList();
 				return View("Home", homePage);
 			}
+
+			if (newPage.PageID.Equals("SITEMAP", StringComparison.OrdinalIgnoreCase))
+			{
+				var siteMap = newPage as SiteMapPageModel;
+				siteMap.SiteMapNavigation = _navs.GetSiteMapNavigation().ToList();
+				return View("SiteMap", siteMap);
+			}
+
 			//TODO: Add templating by fiddling the view
 			var templateView = "Page";
 			return View(templateView, newPage);

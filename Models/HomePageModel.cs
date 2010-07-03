@@ -13,6 +13,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		{
 
 		}
-		public List<NavigationItem> HomeNavigation { get; set; }
+		public IList<NavigationItem> HomeNavigation { get; set; }
 	}
 }

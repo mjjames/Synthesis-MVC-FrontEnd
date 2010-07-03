@@ -7,7 +7,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 {
 	public class PageModel : PageDTO
 	{
-		public List<NavigationItem> MainNavigation { get; set; }
-		public List<NavigationItem> FooterNavigation { get; set; }
+		public IList<NavigationItem> MainNavigation { get; set; }
+		public IList<NavigationItem> FooterNavigation { get; set; }
 	}
 }
