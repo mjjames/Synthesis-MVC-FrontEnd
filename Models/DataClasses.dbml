@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="www.caradocmission.org" EntityNamespace="mjjames.DataEntities" ContextNamespace="mjjames.DataContexts" Class="CMSDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=www.caradocmission.org;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="www_caradocmission_orgConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=www.caradocmission.org;Integrated Security=True" SettingsObjectName="mjjames.MVC_MultiTenant_Controllers_and_Models.Properties.Settings" SettingsPropertyName="www_caradocmission_orgConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.articles" Member="Articles">
     <Type Name="Article">
       <Column Name="article_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -16,7 +16,7 @@
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="virtualurl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_article" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_Article" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.testimonies" Member="Testimonies">
@@ -29,8 +29,8 @@
       <Column Name="video_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="project_testimony" Member="Project" Storage="_project" ThisKey="project_fkey" OtherKey="project_key" Type="Project" IsForeignKey="true" />
-      <Association Name="site_testimony" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Project_Testimony" Member="Project" Storage="_project" ThisKey="project_fkey" OtherKey="project_key" Type="Project" IsForeignKey="true" />
+      <Association Name="Site_Testimony" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.banners" Member="Banners">
@@ -43,7 +43,7 @@
       <Column Name="category" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="randomness" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_banner" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_Banner" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.keyvalues" Member="KeyValues">
@@ -53,8 +53,8 @@
       <Column Name="key_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="value" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="link_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="lookup_keyvalue" Member="lookup" ThisKey="link_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
-      <Association Name="lookup_keyvalue1" Member="Lookup1" Storage="_lookup1" ThisKey="key_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="Lookup_KeyValue" Member="lookup" ThisKey="link_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="Lookup_KeyValue1" Member="Lookup1" Storage="_lookup1" ThisKey="key_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.lookup" Member="Lookups">
@@ -65,11 +65,11 @@
       <Column Name="type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="lookup_keyvalue" Member="keyvalues" ThisKey="lookup_key" OtherKey="link_lookup" Type="KeyValue" />
-      <Association Name="lookup_keyvalue1" Member="KeyValues1" Storage="_keyvalues1" ThisKey="lookup_key" OtherKey="key_lookup" Type="KeyValue" />
-      <Association Name="lookup_marketingsite" Member="MarketingSites" Storage="_marketingsites" ThisKey="lookup_key" OtherKey="template_lookup" Type="MarketingSite" />
-      <Association Name="lookup_media" Member="Medias" Storage="_medias" ThisKey="lookup_key" OtherKey="mediatype_lookup" Type="Media" />
-      <Association Name="lookup_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="lookup_key" OtherKey="linktype_lookup" Type="MediaLink" />
+      <Association Name="Lookup_KeyValue" Member="keyvalues" ThisKey="lookup_key" OtherKey="link_lookup" Type="KeyValue" />
+      <Association Name="Lookup_KeyValue1" Member="KeyValues1" Storage="_keyvalues1" ThisKey="lookup_key" OtherKey="key_lookup" Type="KeyValue" />
+      <Association Name="Lookup_MarketingSite" Member="MarketingSites" Storage="_marketingsites" ThisKey="lookup_key" OtherKey="template_lookup" Type="MarketingSite" />
+      <Association Name="Lookup_Media" Member="Medias" Storage="_medias" ThisKey="lookup_key" OtherKey="mediatype_lookup" Type="Media" />
+      <Association Name="Lookup_MediaLink" Member="MediaLinks" Storage="_media_links" ThisKey="lookup_key" OtherKey="linktype_lookup" Type="MediaLink" />
     </Type>
   </Table>
   <Table Name="dbo.marketingsites" Member="MarketingSites">
@@ -82,8 +82,8 @@
       <Column Name="body" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="short_description" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="template_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="lookup_marketingsite" Member="Lookup" Storage="_lookup" ThisKey="template_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
-      <Association Name="site_marketingsite" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Lookup_MarketingSite" Member="Lookup" Storage="_lookup" ThisKey="template_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="Site_MarketingSite" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.media" Member="Medias">
@@ -96,9 +96,9 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="link" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="media_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="media_key" OtherKey="media_fkey" Type="MediaLink" />
-      <Association Name="lookup_media" Member="Lookup" Storage="_lookup" ThisKey="mediatype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
-      <Association Name="site_media" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Media_MediaLink" Member="MediaLinks" Storage="_media_links" ThisKey="media_key" OtherKey="media_fkey" Type="MediaLink" />
+      <Association Name="Lookup_Media" Member="Lookup" Storage="_lookup" ThisKey="mediatype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="Site_Media" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.media_links" Member="MediaLinks">
@@ -108,9 +108,9 @@
       <Column Name="link_fkey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="linktype_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="lookup_media_link" Member="Lookup" Storage="_lookup" ThisKey="linktype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
-      <Association Name="media_media_link" Member="Media" Storage="_media" ThisKey="media_fkey" OtherKey="media_key" Type="Media" IsForeignKey="true" />
-      <Association Name="site_media_link" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Lookup_MediaLink" Member="Lookup" Storage="_lookup" ThisKey="linktype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
+      <Association Name="Media_MediaLink" Member="Media" Storage="_media" ThisKey="media_fkey" OtherKey="media_key" Type="Media" IsForeignKey="true" />
+      <Association Name="Site_MediaLink" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.NewsletterReciprients" Member="NewsletterReciprients">
@@ -121,7 +121,7 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="confirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_NewsletterReciprient" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_NewsletterReciprient" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Newsletters" Member="Newsletters">
@@ -132,7 +132,7 @@
       <Column Name="date_sent" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="date_created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_Newsletter" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_Newsletter" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.offers" Member="Offers">
@@ -149,7 +149,7 @@
       <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_offer" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_Offer" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.pages" Member="Pages">
@@ -176,7 +176,7 @@
       <Column Name="passwordprotect" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="site_page" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Site_Page" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.projects" Member="Projects">
@@ -192,8 +192,8 @@
       <Column Name="video_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="project_testimony" Member="Testimonies" Storage="_testimonies" ThisKey="project_key" OtherKey="project_fkey" Type="Testimony" />
-      <Association Name="site_project" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
+      <Association Name="Project_Testimony" Member="Testimonies" Storage="_testimonies" ThisKey="project_key" OtherKey="project_fkey" Type="Testimony" />
+      <Association Name="Site_Project" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.sites" Member="Sites">
@@ -202,17 +202,17 @@
       <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="hostname" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="site_article" Member="Articles" Storage="_articles" ThisKey="site_key" OtherKey="site_fkey" Type="Article" />
-      <Association Name="site_testimony" Member="Testimonies" Storage="_testimonies" ThisKey="site_key" OtherKey="site_fkey" Type="Testimony" />
-      <Association Name="site_banner" Member="Banners" Storage="_banners" ThisKey="site_key" OtherKey="site_fkey" Type="Banner" />
-      <Association Name="site_marketingsite" Member="MarketingSites" Storage="_marketingsites" ThisKey="site_key" OtherKey="site_fkey" Type="MarketingSite" />
-      <Association Name="site_media" Member="Medias" Storage="_medias" ThisKey="site_key" OtherKey="site_fkey" Type="Media" />
-      <Association Name="site_media_link" Member="MediaLinks" Storage="_media_links" ThisKey="site_key" OtherKey="site_fkey" Type="MediaLink" />
-      <Association Name="site_NewsletterReciprient" Member="NewsletterReciprients" ThisKey="site_key" OtherKey="site_fkey" Type="NewsletterReciprient" />
-      <Association Name="site_Newsletter" Member="Newsletters" ThisKey="site_key" OtherKey="site_fkey" Type="Newsletter" />
-      <Association Name="site_offer" Member="Offers" Storage="_offers" ThisKey="site_key" OtherKey="site_fkey" Type="Offer" />
-      <Association Name="site_page" Member="Pages" Storage="_pages" ThisKey="site_key" OtherKey="site_fkey" Type="Page" />
-      <Association Name="site_project" Member="Projects" Storage="_projects" ThisKey="site_key" OtherKey="site_fkey" Type="Project" />
+      <Association Name="Site_Article" Member="Articles" Storage="_articles" ThisKey="site_key" OtherKey="site_fkey" Type="Article" />
+      <Association Name="Site_Testimony" Member="Testimonies" Storage="_testimonies" ThisKey="site_key" OtherKey="site_fkey" Type="Testimony" />
+      <Association Name="Site_Banner" Member="Banners" Storage="_banners" ThisKey="site_key" OtherKey="site_fkey" Type="Banner" />
+      <Association Name="Site_MarketingSite" Member="MarketingSites" Storage="_marketingsites" ThisKey="site_key" OtherKey="site_fkey" Type="MarketingSite" />
+      <Association Name="Site_Media" Member="Medias" Storage="_medias" ThisKey="site_key" OtherKey="site_fkey" Type="Media" />
+      <Association Name="Site_MediaLink" Member="MediaLinks" Storage="_media_links" ThisKey="site_key" OtherKey="site_fkey" Type="MediaLink" />
+      <Association Name="Site_NewsletterReciprient" Member="NewsletterReciprients" ThisKey="site_key" OtherKey="site_fkey" Type="NewsletterReciprient" />
+      <Association Name="Site_Newsletter" Member="Newsletters" ThisKey="site_key" OtherKey="site_fkey" Type="Newsletter" />
+      <Association Name="Site_Offer" Member="Offers" Storage="_offers" ThisKey="site_key" OtherKey="site_fkey" Type="Offer" />
+      <Association Name="Site_Page" Member="Pages" Storage="_pages" ThisKey="site_key" OtherKey="site_fkey" Type="Page" />
+      <Association Name="Site_Project" Member="Projects" Storage="_projects" ThisKey="site_key" OtherKey="site_fkey" Type="Project" />
     </Type>
   </Table>
 </Database>

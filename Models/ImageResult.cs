@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Web.Mvc;
 using System.Web;
 
-namespace mjjames.Models
+namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
 	public class ImageResult : ActionResult
 	{

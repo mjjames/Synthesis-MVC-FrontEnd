@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using mjjames.DataEntities;
-using mjjames.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
@@ -30,13 +30,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
-			var ourPage = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pages.GetPage("HOME") : _pages.GetPageFromUrl(id);
+			var ourPage = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pages.Get("HOME") : _pages.GetPageFromUrl(id);
 			return BuildPage(ourPage);
 		}
 
 		public ActionResult PageFromID(string id)
 		{
-			return BuildPage(_pages.GetPage(id));
+			return BuildPage(_pages.Get(id));
 		}
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult PageFromKey(int key)
 		{
-			var ourPage = _pages.GetPage(key);
+			var ourPage = _pages.Get(key);
 
 			return BuildPage(ourPage);
 		}
@@ -67,7 +67,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				Response.Redirect(ourPage.linkurl, true);
 			}
 
-			PageModel newPage = new HomePageModel
+			PageModel newPage = new PageModel
 							{
 								AccessKey = ourPage.accesskey,
 								Active = ourPage.active,
@@ -99,14 +99,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			}
 
 			if(newPage.PageID.Equals("HOME", StringComparison.OrdinalIgnoreCase)){
-				var homePage = newPage as HomePageModel;
+				var homePage = new HomePageModel(newPage);
 				homePage.HomeNavigation = _navs.GetHomePageNavigation().ToList();
 				return View("Home", homePage);
 			}
 
 			if (newPage.PageID.Equals("SITEMAP", StringComparison.OrdinalIgnoreCase))
 			{
-				var siteMap = newPage as SiteMapPageModel;
+				var siteMap = new SiteMapPageModel(newPage);
 				siteMap.SiteMapNavigation = _navs.GetSiteMapNavigation().ToList();
 				return View("SiteMap", siteMap);
 			}

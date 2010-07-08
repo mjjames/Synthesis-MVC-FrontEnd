@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using mjjames.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using System.Net.Mail;
 using System.Configuration;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
@@ -25,7 +25,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		{
 			//bit of a trick here - load the page action result and then pull just the model out and pass that to our view
 
-			var pageData = BuildPage(_pages.GetPage("contactus"));
+			var pageData = BuildPage(_pages.Get("contactus"));
 
 			return View(pageData);
 		}
@@ -83,7 +83,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult ContactUsIndex(string name, string email, string message, bool captchaValid)
 		{
-			var pageData = BuildPage(_pages.GetPage("contactus"));
+			var pageData = BuildPage(_pages.Get("contactus"));
 
 			ViewData["name"] = name;
 			ViewData["email"] = email;

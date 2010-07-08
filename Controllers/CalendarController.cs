@@ -5,7 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Globalization;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
-using mjjames.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {

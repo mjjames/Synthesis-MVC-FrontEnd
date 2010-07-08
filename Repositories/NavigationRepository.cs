@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web;
 
-namespace mjjames.Models
+namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
 	public class NavigationRepository
 	{
@@ -104,8 +104,6 @@ namespace mjjames.Models
 								 Url = navItem.Url
 							 }).AsQueryable();
 		}
-
-
 
 		internal IQueryable<NavigationItem> GetHomePageNavigation()
 		{

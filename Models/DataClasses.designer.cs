@@ -73,7 +73,7 @@ namespace mjjames.DataContexts
     #endregion
 		
 		public CMSDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["www_caradocmission_orgConnectionString"].ConnectionString, mappingSource)
+				base(global::mjjames.MVC_MultiTenant_Controllers_and_Models.Properties.Settings.Default.www_caradocmission_orgConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

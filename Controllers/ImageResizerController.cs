@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using mjjames.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using mjjames.Imaging;
 
 namespace mjjames.Controllers

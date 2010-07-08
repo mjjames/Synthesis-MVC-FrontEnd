@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using mjjames.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 {
