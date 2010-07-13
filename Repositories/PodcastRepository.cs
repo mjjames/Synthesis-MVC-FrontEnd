@@ -6,6 +6,7 @@ using mjjames.DataContexts;
 using mjjames.DataEntities;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DataEntities;
 using System.Configuration;
+using System.Globalization;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
@@ -25,6 +26,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 						on p.media_key equals kv.link_fkey
 				   where p.Lookup.lookup_id == "podcast"
 						&& kv.lookup.lookup_id == "podcast_publishdate" && kv.Lookup1.lookup_id == "medialookup"
+				   orderby Convert.ToDateTime(kv.value)
 				   select new Podcast
 				   {
 					   Active = p.active,
@@ -41,18 +43,20 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// <returns></returns>
 		public IQueryable<Podcast> FindAllActive()
 		{
+			
 			return from p in _dc.Medias
 				   join kv in _dc.KeyValues
-						on p.media_key equals kv.link_fkey
+						on p.media_key equals kv.link_fkey 
 				   where p.Lookup.lookup_id == "podcast"
 						&& kv.lookup.lookup_id == "podcast_publishdate" && kv.Lookup1.lookup_id == "medialookup"
 						&& p.active
+				   orderby Convert.ToDateTime(kv.value)
 				   select new Podcast
 				   {
 					   Active = p.active,
 					   Description = p.description,
 					   Filename = p.filename,
-					   Published = DateTime.Parse(kv.value),
+					   Published = Convert.ToDateTime(kv.value),
 					   Title = p.title
 				   };
 		}

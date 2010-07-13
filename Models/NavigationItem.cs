@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
+namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 {
 	public class NavigationItem
 	{

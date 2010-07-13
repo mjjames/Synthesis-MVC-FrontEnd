@@ -77,11 +77,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionResults\RSSActionResult.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\ImageResizerController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Models\Feeds\PodcastFeed.cs" />
     <Compile Include="Models\DataEntities\Podcast.cs" />
     <Compile Include="Models\DTO\PodcastDTO.cs" />
     <Compile Include="Models\PodcastModel.cs" />
@@ -144,6 +147,7 @@
       <Name>mjjames.GoogleCalendarWrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

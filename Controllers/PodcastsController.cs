@@ -29,7 +29,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				Podcasts = _podcasts.GetPodcastsByDate(date).Select(p => new PodcastDTO { 
 					Title = p.Title,
 					Description = p.Description,
-					Filename = p.Filename,
+					FileName = p.Filename,
 					Published = p.Published
 				}).ToList()
 
