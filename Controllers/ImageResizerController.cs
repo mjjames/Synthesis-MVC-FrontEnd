@@ -36,7 +36,8 @@ namespace mjjames.Controllers
 			
 			if(!String.IsNullOrEmpty(filename)) //do a file system check
 			{
-				if(!System.IO.File.Exists(Server.MapPath("~/uploads/"+filename+".jpg")))
+				filename = filename.Replace("_-_", "/");
+				if(!System.IO.File.Exists(Server.MapPath("~/uploads/"+ filename+".jpg")))
 				{
 					filename = String.Empty;
 				}

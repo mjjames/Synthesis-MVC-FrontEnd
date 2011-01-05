@@ -98,24 +98,28 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				newPage.ThumbnailImage = System.IO.Path.Combine(ConfigurationManager.AppSettings["uploaddir"], newPage.ThumbnailImage);
 			}
 
-			if(newPage.PageID.Equals("HOME", StringComparison.OrdinalIgnoreCase)){
-				var homePage = new HomePageModel(newPage);
-				homePage.HomeNavigation = _navs.GetHomePageNavigation().ToList();
-				return View("Home", homePage);
-			}
-
-			if (newPage.PageID.Equals("SITEMAP", StringComparison.OrdinalIgnoreCase))
+			if (!String.IsNullOrEmpty(newPage.PageID))
 			{
-				var siteMap = new SiteMapPageModel(newPage);
-				siteMap.SiteMapNavigation = _navs.GetSiteMapNavigation().ToList();
-				return View("SiteMap", siteMap);
-			}
+				if (newPage.PageID.Equals("HOME", StringComparison.OrdinalIgnoreCase))
+				{
+					var homePage = new HomePageModel(newPage);
+					homePage.HomeNavigation = _navs.GetHomePageNavigation().ToList();
+					return View("Home", homePage);
+				}
 
+				if (newPage.PageID.Equals("SITEMAP", StringComparison.OrdinalIgnoreCase))
+				{
+					var siteMap = new SiteMapPageModel(newPage);
+					siteMap.SiteMapNavigation = _navs.GetSiteMapNavigation().ToList();
+					return View("SiteMap", siteMap);
+				}
+			}
+			
 			//TODO: Add templating by fiddling the view
 			var templateView = "Page";
 			return View(templateView, newPage);
 		}
 
-       
+	   
 	}
 }

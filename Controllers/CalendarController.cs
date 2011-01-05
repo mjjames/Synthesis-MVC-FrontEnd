@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Globalization;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
@@ -26,6 +27,34 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
 			};
 			return View("Calendar", model);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="feedURL"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
+		/// <returns></returns>
+		public ActionResult CalendarList(string feedURL, DateTime startDate, DateTime endDate)
+		{
+			//get a custom range view of events
+			var eventEntries = new GoogleCalendarWrapper.GoogleCalendar(feedURL)
+				.GetEvents(startDate, endDate).Select(eventEntry => new CalendaryEntryDTO
+				{
+					Identifier = eventEntry.Id.ToString(),
+					Description = eventEntry.Content != null ? eventEntry.Content.Content : "",
+					Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
+					Title = eventEntry.Title.Text,
+					End = eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
+					Start = eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
+				}).OrderBy(e => e.Start).ToList();
+			if (eventEntries.Count() == 0)
+			{
+				eventEntries.Add(new CalendaryEntryDTO { Title = "Event Information Unavailable at this time" });
+			}
+
+			return View("ListView", eventEntries);
 		}
 	}
 }

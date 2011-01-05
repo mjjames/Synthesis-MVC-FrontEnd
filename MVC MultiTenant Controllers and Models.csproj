@@ -56,9 +56,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External References\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="mjjames.Imaging">
-      <HintPath>..\..\classes\Imaging\bin\Release\mjjames.Imaging.dll</HintPath>
-    </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\..\..\Resources\reCaptcha\bin\Release\Recaptcha.dll</HintPath>
     </Reference>
@@ -82,11 +79,14 @@
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\ImageResizerController.cs" />
+    <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Models\DTO\MediaDTO.cs" />
     <Compile Include="Models\Feeds\PodcastFeed.cs" />
     <Compile Include="Models\DataEntities\Podcast.cs" />
     <Compile Include="Models\DTO\PodcastDTO.cs" />
+    <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\PodcastModel.cs" />
     <Compile Include="Controllers\PodcastsController.cs" />
     <Compile Include="Models\DataClasses.designer.cs">
@@ -101,6 +101,7 @@
     <Compile Include="Models\ImageResult.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\MediaRepository.cs" />
     <Compile Include="Repositories\NavigationRepository.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Repositories\PageRepository.cs" />
@@ -137,6 +138,10 @@
     <ProjectReference Include="..\..\BibleGatewayWrapper\BibleGateway\mjjames.BibleGateway.csproj">
       <Project>{E8B1E4BC-0539-4CC5-AEDF-617461288E4E}</Project>
       <Name>mjjames.BibleGateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\classes\Imaging\Imaging.csproj">
+      <Project>{0DC543BE-B98F-4D32-BCFB-C65BACAAF347}</Project>
+      <Name>Imaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\classes\mjjames.core\mjjames.core\mjjames.core.csproj">
       <Project>{B8488B6E-F1E4-4C64-A39D-5C853169DCE5}</Project>

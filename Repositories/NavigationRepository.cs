@@ -61,7 +61,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
 
 				var childPages = (from SiteMapNode child in node.ChildNodes
-								  where child["Visible"].Equals("1")
+								  where child["Visible"] != null && child["Visible"].Equals("1")
 								  select new NavigationItem
 											{
 												Title = child.Title,
@@ -95,12 +95,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				return new List<NavigationItem>().AsQueryable();
 			}
 			return (from SiteMapNode navItem in siteMap.RootNode.GetAllNodes()
-					where navItem["Visible"].Equals("1")
+					where navItem["Visible"] != null && navItem["Visible"].Equals("1")
 					select new NavigationItem
 							 {
 								 Title = navItem.Title,
 								 CssClass = "footerItem navItem",
 								 Description = navItem.Description,
+								 ImageUrl = navItem["imageURL"],
 								 PageKey = int.Parse(navItem.Key),
 								 Url = navItem.Url
 							 }).AsQueryable();
@@ -114,7 +115,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				return new List<NavigationItem>().AsQueryable();
 			}
 			return (from SiteMapNode navItem in siteMap.RootNode.GetAllNodes()
-					where navItem["Visible"].Equals("1")
 					select new NavigationItem
 					{
 						Title = navItem.Title,
@@ -134,7 +134,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				return new List<NavigationItem>().AsQueryable();
 			}
 			return (from SiteMapNode navItem in siteMap.RootNode.ChildNodes
-					where navItem["Visible"].Equals("1")
+					where navItem["Visible"] != null && navItem["Visible"].Equals("1")
 					select new NavigationItem
 					{
 						Title = navItem.Title,
