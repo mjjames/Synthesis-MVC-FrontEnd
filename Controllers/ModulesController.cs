@@ -41,8 +41,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 									Description = eventEntry.Summary.Text,
 									Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
 									Title = eventEntry.Title.Text,
-									End = eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
-									Start = eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
+                                    End = eventEntry.Times.Any()  && eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
+									Start = eventEntry.Times.Any() && eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
 								};
 			}
 			else
@@ -71,13 +71,21 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 																						   Description = eventEntry.Content != null ? eventEntry.Content.Content : "",
 																						   Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
 																						   Title = eventEntry.Title.Text,
-																						   End = eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
-																						   Start = eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
+																						   End = eventEntry.Times.Any()  && eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
+																						   Start = eventEntry.Times.Any() && eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
 																					   }).OrderBy(e => e.Start).ToList();
-			if (eventEntries.Count() == 0)
-			{
-				eventEntries.Add(new CalendaryEntryDTO { Title = "Event Information Unavailable at this time" });
-			}
+            if (!eventEntries.Any())
+            {
+                eventEntries.Add(new CalendaryEntryDTO { Title = "Event Information Unavailable at this time" });
+            }
+            else
+            {
+                eventEntries = eventEntries.Where(e => e.Start >= DateTime.Now && e.End >= DateTime.Now).ToList();
+                if (!eventEntries.Any())
+                {
+                    eventEntries.Add(new CalendaryEntryDTO { Title = "No More Events This Month" });
+                }
+            }
 
 			return View("CalendarMonthView", eventEntries);
 		}
