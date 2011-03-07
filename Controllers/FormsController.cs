@@ -33,13 +33,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		//converts a Page into a PageModel
 		private PageModel BuildPage(DataEntities.Page ourPage)
 		{
-			if(ourPage == null)
+			if (ourPage == null)
 			{
 				return new PageModel
-				       	{
-				       		FooterNavigation = _navs.GetFooterNavigation().ToList(),
+						{
+							FooterNavigation = _navs.GetFooterNavigation().ToList(),
 							MainNavigation = _navs.GetMainNavigation().ToList()
-				       	};
+						};
 			}
 
 			PageModel newPage = new HomePageModel
@@ -93,7 +93,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			var objEmail = new MailMessage();
 
 			// Validation
-			if(!captchaValid)
+			if (!captchaValid)
 				ViewData.ModelState.AddModelError("captcha", "Please Complete the Captcha");
 			if (string.IsNullOrEmpty(name))
 				ViewData.ModelState.AddModelError("name", "Please enter your name");
@@ -117,11 +117,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 #endif
 			try
 			{
-// ReSharper disable AssignNullToNotNullAttribute
+				// ReSharper disable AssignNullToNotNullAttribute
 				// we validate email earlier on when we do our model validation
 				objEmail.From = new MailAddress(email, name);
 				objEmail.CC.Add(email);
-// ReSharper restore AssignNullToNotNullAttribute
+				// ReSharper restore AssignNullToNotNullAttribute
 
 				bSendEmail = true;
 			}
@@ -133,7 +133,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			objEmail.Body = String.Format("{0} \r\n Name: {1} \r\n Email: {2}", message, name, email);
 			objEmail.Priority = MailPriority.High;
 			//send the message
-			var smtp = new SmtpClient {Host = "localhost"};
+			var smtp = new SmtpClient { Host = "localhost" };
 
 			if (bSendEmail)
 			{
@@ -156,6 +156,35 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			return View("FormComplete", pageData);
 		}
 
+		/// <summary>
+		/// Processes a callback
+		/// </summary>
+		/// <param name="contactName"></param>
+		/// <param name="contactNumber"></param>
+		/// <param name="timeSlot"></param>
+		/// <param name="email">actually the current date, the name email is to trick bots</param>
+		/// <returns></returns>
+		[AcceptVerbs(HttpVerbs.Post)]
+		public ActionResult CallBack(string contactName, string contactNumber, string timeSlot, string email)
+		{
+			//if the date returned by the form is not todays date we are spam
+			if (!DateTime.Now.ToString("d/M/yyyy").Equals(email))
+			{
+				return View("Callback");
+			}
+
+			var messageBody = String.Format("Name: {0}\r\nNumber: {1}\r\nTime Slot: {2})", contactName, contactNumber, timeSlot);
+			var callbackMessage = new MailMessage(ConfigurationManager.AppSettings["callbackFormFromAddress"], ConfigurationManager.AppSettings["callbackFormToAddress"], "IDEA Callback Request", messageBody)
+			{
+				IsBodyHtml = false
+			};
+
+			var smtp = new SmtpClient { Host = "localhost" };
+			smtp.Send(callbackMessage);
+
+			return View("CallbackComplete");
+
+		}
 	}
 
 	public class CaptchaValidatorAttribute : ActionFilterAttribute

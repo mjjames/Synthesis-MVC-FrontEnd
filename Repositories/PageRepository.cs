@@ -55,10 +55,37 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				url = "/" + url;
 			}
 
-			//next query our default sitemap provider for a page with this url
-			var node = SiteMap.Provider.FindSiteMapNode(url);
-			//if found use it's key to call the GetPage method, else return null
-			return node != null ? Get(int.Parse(node.Key)) : null;
+			//if the url is just / then we are actually looking for a home page
+			if (url == "/")
+			{
+				url = "/home";
+			}
+
+			//our page url part is our last item after splitting on /
+			//we need to then find a page that matches this url part
+			var pageUrlParts = url.Split(new []{"/"}, System.StringSplitOptions.RemoveEmptyEntries);
+			//find any pages that match our url part 
+			var pages = _dc.Pages.Where(p => p.page_url.Equals(pageUrlParts.Last()));
+			//if we dont have any pages then return null
+			if(!pages.Any()){
+				return null;
+			}
+			//now if we have multiple pages we have to find an exact match
+			//other wise just return the page
+			if (pages.Count() == 1)
+			{
+				return pages.First();
+			}
+
+			//we are going to be a bit nieve and say that if up to 3 urls match then we have a match
+			var counter = 0;
+			//loop until we hit our page parts limit or 3
+			while(counter < pageUrlParts.Length && counter < 3){
+				//simply overwrite our pages collection with the results of the filter
+				pages = pages.Where(p => p.page_url == pageUrlParts[pageUrlParts.Length - counter]);
+			}
+			//we should now just have one page so return the first
+			return pages.FirstOrDefault();
 		}
 	}
 }

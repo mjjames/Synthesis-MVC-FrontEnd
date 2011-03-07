@@ -31,7 +31,7 @@ namespace mjjames.Controllers
 
 			//to stop abuse and empty values set some defaults if to small or big
 		
-			height = height <= 0 || height >= 600 ? 200 : height;
+			height = height <= 0 || height >= 700 ? 200 : height;
 			width = width <= 0 || width>= 970 ? 200 : width;
 			
 			if(!String.IsNullOrEmpty(filename)) //do a file system check
