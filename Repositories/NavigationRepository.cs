@@ -2,89 +2,113 @@
 using System.Linq;
 using System.Web;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
+using mjjames.DataEntities;
+using System;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
 	public class NavigationRepository
 	{
+		private PageRepository _pageRepository = new PageRepository();
+
 		internal IQueryable<NavigationItem> GetMainNavigation()
 		{
-			//we build a main navigation by loading the navigation sitemap and then spinning through the top level and creating nav items from it
-			//then we find the current page and pull out its children 
 			var navItems = new List<NavigationItem>();
-
-			//load our main navigation sitemap
-			var siteMap = SiteMap.Providers["siteNavigation"];
-			if (siteMap == null || siteMap.RootNode == null) //if null return an empty nav list
+			//we build the navigation by first pulling out the home page from the page repository
+			var homePage = _pageRepository.Get("HOME"); //use the home page id
+			//if we haven't got a home page something is badly wrong
+			if (homePage == null)
 			{
-				System.Diagnostics.Debug.WriteLine("No Site Mavigation SiteMap Found");
-				return navItems.AsQueryable();
+				throw new Exception("No Home Page Found - There must be a page with an id of HOME");
 			}
-			navItems.Add(new NavigationItem
+			//use the home page to add our first nav item
+			var homeItem = new NavigationItem
 							{
 								CssClass = "navItem home",
 								Description = "",
-								PageKey = int.Parse(siteMap.RootNode.Key),
+								PageKey = homePage.page_key,
 								Title = "Home",
-								Url = siteMap.RootNode.Url
-							});
+								Url = "/" //note the home page always has a url of /
+							};
+			navItems.Add(homeItem);
 
-			//if we have a current node use it's parent else use the root node
-			var parentNode = SiteMap.CurrentNode != null && SiteMap.CurrentNode.ParentNode != null ? SiteMap.CurrentNode.ParentNode : SiteMap.RootNode;
-
-			foreach (SiteMapNode node in siteMap.RootNode.ChildNodes)
-			{
-				//skip sitemapnodes that aren't visible
-				if (node["Visible"].Equals("0")) continue;
-				var navItem = new NavigationItem
-								{
-									PageKey = int.Parse(node.Key),
-									Description = node.Description,
-									Title = node.Title,
-									Url = node.Url,
-									CssClass = "navItem"
-								};
-
-				navItems.Add(navItem);
-
-				//if our node is the current node add a class
-				if (node.Equals(SiteMap.CurrentNode))
-				{
-					navItem.CssClass += " current";
-				}
-
-				//if our current node is this node OR its parent is the parent of the current node then get it's children
-				if (!node.Equals(SiteMap.CurrentNode) && !node.Equals(parentNode)) continue;
-
-				navItem.CssClass += " selected";
-
-
-
-				var childPages = (from SiteMapNode child in node.ChildNodes
-								  where child["Visible"] != null && child["Visible"].Equals("1")
-								  select new NavigationItem
-											{
-												Title = child.Title,
-												Description = child.Description,
-												PageKey = int.Parse(child.Key),
-												Url = child.Url,
-												CssClass = "childNavItem navItem"
-											}).ToList();
-				navItem.ChildPages = childPages;
-
-				//if we dont have a current node dont bother to try and match
-				if (SiteMap.CurrentNode == null) continue;
-
-				//incase a child page is actually the current page try to find a nav item with a matching key
-				var currentPage = childPages.FirstOrDefault(i => i.PageKey.Equals(int.Parse(SiteMap.CurrentNode.Key)));
-				//if we have a page add a current class
-				if (currentPage != null)
-				{
-					currentPage.CssClass += " current";
-				}
-			}
+			//we now need to call the recursive build page tree method, this takes a parent item and the child items to add
+			//this then for each child page calls it self - thus recursively builds the tree
+			//note we filter the child pages to active and on main nav
+			navItems.AddRange(BuildPageTree("", homePage.Pages.Where(p => p.active.HasValue && p.active.Value && p.showinnav.HasValue && p.showinnav.Value)));
 
 			return navItems.AsQueryable();
+		}
+
+		/// <summary>
+		/// Builds the Navigation Item tree ensuring that each item has it's child pages populated
+		/// </summary>
+		/// <param name="parentUrl">parent urlof each child</param>
+		/// <param name="pages">child pages to turn into navigation items</param>
+		/// <returns>Enumerable collection of Navigation Items</returns>
+		private IEnumerable<NavigationItem> BuildPageTree(string parentUrl, IEnumerable<Page> pages)
+		{
+			var childPages = (from p in pages
+							  select new NavigationItem
+							  {
+								  Title = p.navtitle,
+								  Description = p.metadescription,
+								  PageKey = p.page_key,
+								  Url = parentUrl + "/" + p.page_url,
+								  CssClass = GetCssClass(parentUrl + "/" + p.page_url),
+								  ChildPages = GetChildPages(p, parentUrl + "/" + p.page_url),
+								  ImageUrl = p.thumbnailimage
+							  });
+			return childPages;
+		}
+
+		/// <summary>
+		/// Look at the current page and our page url and see if we need to load the child pages
+		/// </summary>
+		/// <param name="p">page</param>
+		/// <param name="url">url to check against</param>
+		/// <returns></returns>
+		private List<NavigationItem> GetChildPages(Page p, string url)
+		{
+			var childPages = new List<NavigationItem>();
+			//simply if our url starts with the url provided then load the child pages
+			if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith(url))
+			{
+				childPages.AddRange(BuildPageTree(url, p.Pages.Where(cp => cp.active.HasValue && cp.active.Value && cp.showinnav.HasValue && cp.showinnav.Value)));
+			}
+			return childPages;
+		}
+
+		/// <summary>
+		/// Calculates the CSS class for the provided page
+		/// </summary>
+		/// <param name="pageUrl">page url to use for current page match</param>
+		/// <returns>the generated class</returns>
+		private string GetCssClass(string pageUrl)
+		{
+			//always have navItem
+			var cssClass = "navItem";
+			//to work out if we are a child page see if we have more than 1 / in the url, one at the start and one after
+			if (pageUrl.Select(c => c.Equals("/")).Count() > 1)
+			{
+				cssClass += " childNavItem";
+			}
+
+			//if we have an exact url match mark the page as current
+			if (HttpContext.Current.Request.Url.AbsolutePath.Equals(pageUrl, System.StringComparison.InvariantCultureIgnoreCase))
+			{
+				cssClass += " current";
+				//once we have current we don't need to check for selected so drop out
+				return cssClass;
+			}
+
+			//if our url isn't an exact match but starts with the provided url then the item must be at least selected
+			if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith(pageUrl))
+			{
+				cssClass += " selected";
+			}
+
+			return cssClass;
 		}
 
 		internal IQueryable<NavigationItem> GetFooterNavigation()
@@ -143,18 +167,20 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 						PageKey = int.Parse(navItem.Key),
 						ImageUrl = navItem["imageURL"],
 						Url = navItem.Url,
-						ChildPages = navItem.ChildNodes.Cast<SiteMapNode>().Select(n => new NavigationItem{
+						ChildPages = navItem.ChildNodes.Cast<SiteMapNode>().Select(n => new NavigationItem
+						{
 							PageKey = int.Parse(n.Key),
 							Title = n.Title,
 							Description = n.Description,
-							CssClass ="sitemapNavItem navItem",
+							CssClass = "sitemapNavItem navItem",
 							ImageUrl = n["imageURL"],
 							Url = n.Url,
-							ChildPages = n.ChildNodes.Cast<SiteMapNode>().Select(no => new NavigationItem{
+							ChildPages = n.ChildNodes.Cast<SiteMapNode>().Select(no => new NavigationItem
+							{
 								PageKey = int.Parse(no.Key),
 								Title = no.Title,
 								Description = no.Description,
-								CssClass ="sitemapNavItem navItem",
+								CssClass = "sitemapNavItem navItem",
 								ImageUrl = no["imageURL"],
 								Url = no.Url
 							}).ToList()

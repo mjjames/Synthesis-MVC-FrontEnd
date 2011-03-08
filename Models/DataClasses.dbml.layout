@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.5, 42.125" name="DataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.5, 42.625" name="DataClasses">
   <DataContextMoniker Name="/CMSDataContext" />
   <nestedChildShapes>
     <classShape Id="19ace069-05e1-459e-b8de-9c3a94925560" absoluteBounds="3.5, 32.625, 2, 3.5016097005208309">
@@ -100,14 +100,14 @@
         <classShapeMoniker Id="a9a26ec8-836b-4fec-b073-f2c1334e4392" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 20.7035953776042); (2.2812525 : 23.5489005533854); (2.46354541666667 : 23.5489005533854 : JumpStart); (2.63021208333333 : 23.5489005533854 : JumpEnd); (6.25 : 23.5489005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.2812525 : 20.7035953776042); (2.2812525 : 23.5489005533854); (6.25 : 23.5489005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_Testimony" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
         <classShapeMoniker Id="a9a26ec8-836b-4fec-b073-f2c1334e4392" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 19.125); (1.75 : 16.9239005533854); (3.5 : 16.9239005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.75 : 19.125); (1.75 : 16.9239005533854); (2.19791916666667 : 16.9239005533854 : JumpStart); (2.36458583333333 : 16.9239005533854 : JumpEnd); (3.5 : 16.9239005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_Banner" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
@@ -149,7 +149,7 @@
         <classShapeMoniker Id="7e67cc40-aaa0-4f8a-85d6-cc3e782bfeea" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 19.59375); (3.16666666666667 : 19.59375 : JumpStart); (3.33333333333333 : 19.59375 : JumpEnd); (6.5 : 19.59375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 19.59375); (6.5 : 19.59375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_Media" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
@@ -170,7 +170,7 @@
         <classShapeMoniker Id="ae1fc77a-ef65-4ff6-abfb-62f7c653190e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 19.910273844401); (3.25 : 19.910273844401); (3.25 : 18.5); (5.57291666666667 : 18.5 : JumpStart); (5.73958333333333 : 18.5 : JumpEnd); (6.04166666666667 : 18.5 : JumpStart); (6.20833333333333 : 18.5 : JumpEnd); (9.718748 : 18.5); (9.718748 : 19)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 19.910273844401); (3.25 : 19.910273844401); (3.25 : 18.5); (5.57291666666667 : 18.5 : JumpStart); (5.73958333333333 : 18.5 : JumpEnd); (9.718748 : 18.5); (9.718748 : 19)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_MediaLink" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
@@ -191,7 +191,7 @@
         <classShapeMoniker Id="da0dbfa8-2c52-4768-9b62-f44a72741214" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.2187475 : 20.7035953776042); (1.2187475 : 30.3085034179688); (1.66666666666667 : 30.3085034179688 : JumpStart); (1.83333333333333 : 30.3085034179688 : JumpEnd); (3.5 : 30.3085034179688)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.2187475 : 20.7035953776042); (1.2187475 : 30.3085034179688); (3.5 : 30.3085034179688)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_Offer" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
@@ -205,11 +205,18 @@
         <classShapeMoniker Id="6f50dc13-0fe9-422a-81a1-a375541171e7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.01562625 : 20.7035953776042); (2.01562625 : 26.4623527018229); (2.46354541666667 : 26.4623527018229 : JumpStart); (2.63021208333333 : 26.4623527018229 : JumpEnd); (3.5 : 26.4623527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.01562625 : 20.7035953776042); (2.01562625 : 26.4623527018229); (3.5 : 26.4623527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CMSDataContext/Site/Site_Project" />
       <nodes>
         <classShapeMoniker Id="b297a738-7332-4356-ae25-64dbf638fa08" />
         <classShapeMoniker Id="51754204-a08d-419e-b672-891d59a0386d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.20923076923077 : 41.9150211588542); (4.20923076923077 : 42.1650211588542); (4.80461538461539 : 42.1650211588542); (4.80461538461539 : 41.9150211588542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CMSDataContext/Page/Page_Page" />
+      <nodes>
+        <classShapeMoniker Id="6f50dc13-0fe9-422a-81a1-a375541171e7" />
+        <classShapeMoniker Id="6f50dc13-0fe9-422a-81a1-a375541171e7" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
