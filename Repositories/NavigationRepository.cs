@@ -35,7 +35,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 			//we now need to call the recursive build page tree method, this takes a parent item and the child items to add
 			//this then for each child page calls it self - thus recursively builds the tree
 			//note we filter the child pages to active and on main nav
-			navItems.AddRange(BuildPageTree("", homePage.Pages.Where(p => p.active.HasValue && p.active.Value && p.showinnav.HasValue && p.showinnav.Value)));
+			Func<Page, bool> filter = p => p.active.HasValue && p.active.Value && p.showinnav.HasValue && p.showinnav.Value;
+			Func<Page, string, List<NavigationItem>> childPages = (p, parentUrl) => GetChildPages(p, parentUrl + "/" + p.page_url, filter);
+			navItems.AddRange(BuildPageTree("", homePage.Pages.Where(filter), childPages));
 
 			return navItems.AsQueryable();
 		}
@@ -45,8 +47,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// </summary>
 		/// <param name="parentUrl">parent urlof each child</param>
 		/// <param name="pages">child pages to turn into navigation items</param>
+		/// <param name="childpagesFilter">function to obtain and filter the child pages</param>
 		/// <returns>Enumerable collection of Navigation Items</returns>
-		private IEnumerable<NavigationItem> BuildPageTree(string parentUrl, IEnumerable<Page> pages)
+		private IEnumerable<NavigationItem> BuildPageTree(string parentUrl, IEnumerable<Page> pages, Func<Page, string, List<NavigationItem>> childpagesFilter)
 		{
 			var childPages = (from p in pages
 							  select new NavigationItem
@@ -56,7 +59,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 								  PageKey = p.page_key,
 								  Url = parentUrl + "/" + p.page_url,
 								  CssClass = GetCssClass(parentUrl + "/" + p.page_url),
-								  ChildPages = GetChildPages(p, parentUrl + "/" + p.page_url),
+								  ChildPages = childpagesFilter(p, parentUrl),
 								  ImageUrl = p.thumbnailimage
 							  });
 			return childPages;
@@ -67,14 +70,16 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// </summary>
 		/// <param name="p">page</param>
 		/// <param name="url">url to check against</param>
+		/// <param name="filter">Func which indicates how to filter the child pages</param>
 		/// <returns></returns>
-		private List<NavigationItem> GetChildPages(Page p, string url)
+		private List<NavigationItem> GetChildPages(Page page, string url, Func<Page, bool> filter)
 		{
 			var childPages = new List<NavigationItem>();
 			//simply if our url starts with the url provided then load the child pages
 			if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith(url))
 			{
-				childPages.AddRange(BuildPageTree(url, p.Pages.Where(cp => cp.active.HasValue && cp.active.Value && cp.showinnav.HasValue && cp.showinnav.Value)));
+				Func<Page, string, List<NavigationItem>> pages = (p, parentUrl) => GetChildPages(p, parentUrl + "/" + p.page_url, filter);
+				childPages.AddRange(BuildPageTree(url, page.Pages.Where(filter), pages));
 			}
 			return childPages;
 		}
@@ -140,17 +145,23 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetFooterNavigation()
 		{
+			//first get all the active pages that are on the footer
+			//next trim out any that don't have parent pages as these are invalid
 			return _pageRepository.FindAllActive()
 									.Where(p => p.showinfooter.HasValue && p.showinfooter.Value)
-									.Select(p => new NavigationItem{
-										Title = p.title,
-										CssClass = "footerItem navItem",
-										Description = p.metadescription,
-										ImageUrl = p.thumbnailimage,
-										PageKey = p.page_key,
-										Url = BuildUrl(p)
-									});
-			
+									.ToList()
+									.Where(p => p.Page1 != null)
+									.AsQueryable()
+									.Select(p => new NavigationItem
+											{
+												Title = p.title,
+												CssClass = "footerItem navItem",
+												Description = p.metadescription,
+												ImageUrl = p.thumbnailimage,
+												PageKey = p.page_key,
+												Url = BuildUrl(p)
+											});
+
 		}
 
 		/// <summary>
@@ -159,9 +170,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetHomePageNavigation()
 		{
-			return _pageRepository	.FindAllActive()
+			return _pageRepository.FindAllActive()
 									.Where(p => p.showonhome.HasValue && p.showonhome.Value)
-									.Select(p => new NavigationItem{
+									.ToList()
+									.Where(p => p.Page1 != null)
+									.AsQueryable()
+									.Select(p => new NavigationItem
+									{
 										Title = p.title,
 										CssClass = "homenavItem navItem",
 										Description = p.metadescription,
@@ -177,42 +192,37 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetSiteMapNavigation()
 		{
-			var siteMap = SiteMap.Providers["siteMap"];
-			if (siteMap == null || siteMap.RootNode == null)
+			var navItems = new List<NavigationItem>();
+			//we build the navigation by first pulling out the home page from the page repository
+			var homePage = _pageRepository.Get("HOME"); //use the home page id
+			//if we haven't got a home page something is badly wrong
+			if (homePage == null)
 			{
-				return new List<NavigationItem>().AsQueryable();
+				throw new Exception("No Home Page Found - There must be a page with an id of HOME");
 			}
-			return (from SiteMapNode navItem in siteMap.RootNode.ChildNodes
-					where navItem["Visible"] != null && navItem["Visible"].Equals("1")
-					select new NavigationItem
-					{
-						Title = navItem.Title,
-						CssClass = "sitemapNavItem navItem",
-						Description = navItem.Description,
-						PageKey = int.Parse(navItem.Key),
-						ImageUrl = navItem["imageURL"],
-						Url = navItem.Url,
-						ChildPages = navItem.ChildNodes.Cast<SiteMapNode>().Select(n => new NavigationItem
-						{
-							PageKey = int.Parse(n.Key),
-							Title = n.Title,
-							Description = n.Description,
-							CssClass = "sitemapNavItem navItem",
-							ImageUrl = n["imageURL"],
-							Url = n.Url,
-							ChildPages = n.ChildNodes.Cast<SiteMapNode>().Select(no => new NavigationItem
-							{
-								PageKey = int.Parse(no.Key),
-								Title = no.Title,
-								Description = no.Description,
-								CssClass = "sitemapNavItem navItem",
-								ImageUrl = no["imageURL"],
-								Url = no.Url
-							}).ToList()
-						}).ToList()
+			//use the home page to add our first nav item
+			var homeItem = new NavigationItem
+			{
+				CssClass = "navItem home",
+				Description = "",
+				PageKey = homePage.page_key,
+				Title = "Home",
+				Url = "/" //note the home page always has a url of /
+			};
+			navItems.Add(homeItem);
 
+			//we now need to call the recursive build page tree method, this takes a parent item and the child items to add
+			//this then for each child page calls it self - thus recursively builds the tree
+			//note we filter the child pages to active and on main nav
+			Func<Page, bool> filter = p => p.active.HasValue && p.active.Value;
+			Func<Page, string, List<NavigationItem>> childPages = (page, parentUrl) => GetChildren(page, parentUrl + "/" + page.page_url, filter);
+			navItems.AddRange(BuildPageTree("", homePage.Pages.Where(p => p.active.HasValue && p.active.Value), childPages));
 
-					}).AsQueryable();
+			return navItems.AsQueryable();
+		}
+		private List<NavigationItem> GetChildren(Page page, string parentUrl, Func<Page, bool> filter)
+		{
+			return new List<NavigationItem>(BuildPageTree(parentUrl, page.Pages.Where(filter), (p, url) => GetChildren(p, url + "/" + p.page_url, filter)));
 		}
 	}
 }
