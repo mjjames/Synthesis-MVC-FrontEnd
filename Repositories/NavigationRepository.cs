@@ -111,45 +111,70 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 			return cssClass;
 		}
 
+		/// <summary>
+		/// Builds the full url for the provided page
+		/// </summary>
+		/// <param name="page">Page to build the url for</param>
+		/// <returns>url for page</returns>
+		private string BuildUrl(Page page)
+		{
+			//create a list to store our url segments in
+			var urlSegments = new List<string>();
+			//first add our current page url
+			urlSegments.Add(page.page_url);
+			//now spin through all of our parent pages until we don't have any more and add their urls to the list
+			var parent = page.Page1;
+			//keep looping until we have no parent and we don't have the home page
+			while (parent != null && parent.page_fkey != 0)
+			{
+				urlSegments.Add(parent.page_url);
+				parent = parent.Page1;
+			}
+			//now we have our segments we need to reverse the list and then join the segments together with /'s
+			return "/" + string.Join("/", urlSegments.Reverse<string>().ToArray());
+		}
+
+		/// <summary>
+		/// Get all the Navigation Items that belong to the Footer Navigation
+		/// </summary>
+		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetFooterNavigation()
 		{
-			var siteMap = SiteMap.Providers["footerNavigation"];
-			if (siteMap == null || siteMap.RootNode == null)
-			{
-				return new List<NavigationItem>().AsQueryable();
-			}
-			return (from SiteMapNode navItem in siteMap.RootNode.GetAllNodes()
-					where navItem["Visible"] != null && navItem["Visible"].Equals("1")
-					select new NavigationItem
-							 {
-								 Title = navItem.Title,
-								 CssClass = "footerItem navItem",
-								 Description = navItem.Description,
-								 ImageUrl = navItem["imageURL"],
-								 PageKey = int.Parse(navItem.Key),
-								 Url = navItem.Url
-							 }).AsQueryable();
+			return _pageRepository.FindAllActive()
+									.Where(p => p.showinfooter.HasValue && p.showinfooter.Value)
+									.Select(p => new NavigationItem{
+										Title = p.title,
+										CssClass = "footerItem navItem",
+										Description = p.metadescription,
+										ImageUrl = p.thumbnailimage,
+										PageKey = p.page_key,
+										Url = BuildUrl(p)
+									});
+			
 		}
 
+		/// <summary>
+		/// Gets all the Navigation Items that belong to the HomePage Navigation
+		/// </summary>
+		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetHomePageNavigation()
 		{
-			var siteMap = SiteMap.Providers["homeNavigation"];
-			if (siteMap == null || siteMap.RootNode == null)
-			{
-				return new List<NavigationItem>().AsQueryable();
-			}
-			return (from SiteMapNode navItem in siteMap.RootNode.GetAllNodes()
-					select new NavigationItem
-					{
-						Title = navItem.Title,
-						CssClass = "homenavItem navItem",
-						Description = navItem.Description,
-						PageKey = int.Parse(navItem.Key),
-						ImageUrl = navItem["imageURL"],
-						Url = navItem.Url
-					}).AsQueryable();
+			return _pageRepository	.FindAllActive()
+									.Where(p => p.showonhome.HasValue && p.showonhome.Value)
+									.Select(p => new NavigationItem{
+										Title = p.title,
+										CssClass = "homenavItem navItem",
+										Description = p.metadescription,
+										PageKey = p.page_key,
+										ImageUrl = p.thumbnailimage,
+										Url = BuildUrl(p)
+									});
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		internal IQueryable<NavigationItem> GetSiteMapNavigation()
 		{
 			var siteMap = SiteMap.Providers["siteMap"];
