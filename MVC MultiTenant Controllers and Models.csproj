@@ -100,6 +100,7 @@
     <Compile Include="Models\HomePageModel.cs" />
     <Compile Include="Models\ImageResult.cs" />
     <Compile Include="Models\NavigationItem.cs" />
+    <Compile Include="Models\Site.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\MediaRepository.cs" />
     <Compile Include="Repositories\NavigationRepository.cs" />
@@ -113,6 +114,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\SiteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

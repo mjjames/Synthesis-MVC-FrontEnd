@@ -3577,7 +3577,7 @@ namespace mjjames.DataEntities
 		
 		private string _password;
 		
-		private System.Nullable<int> _site_fkey;
+		private int _site_fkey;
 		
 		private EntitySet<Page> _Pages;
 		
@@ -3631,7 +3631,7 @@ namespace mjjames.DataEntities
     partial void OnpasswordprotectChanged();
     partial void OnpasswordChanging(string value);
     partial void OnpasswordChanged();
-    partial void Onsite_fkeyChanging(System.Nullable<int> value);
+    partial void Onsite_fkeyChanging(int value);
     partial void Onsite_fkeyChanged();
     #endregion
 		
@@ -4068,7 +4068,7 @@ namespace mjjames.DataEntities
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_site_fkey", DbType="Int")]
-		public System.Nullable<int> site_fkey
+		public int site_fkey
 		{
 			get
 			{
@@ -4131,7 +4131,7 @@ namespace mjjames.DataEntities
 					}
 					else
 					{
-						this._site_fkey = default(Nullable<int>);
+						this._site_fkey = default(int);
 					}
 					this.SendPropertyChanged("Site");
 				}

@@ -9,6 +9,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
 	public class NavigationRepository
 	{
+		//all pages come from the page repository - by doing this we don't have to deal with sites ourselves
 		private PageRepository _pageRepository = new PageRepository();
 
 		internal IQueryable<NavigationItem> GetMainNavigation()
