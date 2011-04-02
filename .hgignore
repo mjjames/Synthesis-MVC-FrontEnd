@@ -1,0 +1,7 @@
+glob:MVC MultiTenant Controllers and Models.csproj.user
+relre:^.*.dll$
+relre:.*.pdb
+relre:.*.cache
+glob:MVC MultiTenant Controllers and Models.sln
+relre:bin/.*
+relre:obj/.*
