@@ -13,6 +13,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	public class MediaController : Controller
 	{
 		private readonly MediaRepository _mediaRepository = new MediaRepository();
+        
+        [ChildActionOnly]
 		public ActionResult Banners(MediaType mediaType, int number)
 		{
 			var banners = _mediaRepository.GetByLookupID(mediaType.ToString()).Select( m => new MediaDTO{

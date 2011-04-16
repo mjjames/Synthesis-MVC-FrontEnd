@@ -88,25 +88,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
             }
 
 			return View("CalendarMonthView", eventEntries);
-		}
-
-		
-
-		public ActionResult LatestPodcast()
-		{
-			//get our podcaste repository
-			var podcasts = new PodcastRepository();
-			//get our latest podcast
-			var latest = podcasts.FindAllActive().Select(p => new PodcastDTO{
-				Description = p.Description,
-				FileName = p.Filename,
-				Published = p.Published,
-				Title = p.Title
-			}).FirstOrDefault();
-			//return our LatestPodcast View - the view should handle not having a podcast
-			return View("LatestPodcast", latest);
-		}
-
-		
+		}		
 	}
 }
