@@ -44,10 +44,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				{
 					Identifier = eventEntry.Id.ToString(),
 					Description = eventEntry.Content != null ? eventEntry.Content.Content : "",
-					Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
+					Location = eventEntry.Locations.Count > 0 ? eventEntry.Locations[0].ValueString : "",
 					Title = eventEntry.Title.Text,
-					End = eventEntry.Times[0] != null ? eventEntry.Times[0].EndTime : new DateTime(),
-					Start = eventEntry.Times[0] != null ? eventEntry.Times[0].StartTime : new DateTime()
+					End = eventEntry.Times.Count > 0 ? eventEntry.Times[0].EndTime : new DateTime(),
+                    Start = eventEntry.Times.Count > 0 ? eventEntry.Times[0].StartTime : new DateTime()
 				}).OrderBy(e => e.Start).ToList();
 			if (eventEntries.Count() == 0)
 			{

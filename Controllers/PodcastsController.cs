@@ -26,7 +26,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 Date = date,
                 MainNavigation = _navs.GetMainNavigation().ToList(),
                 FooterNavigation = _navs.GetFooterNavigation().ToList(),
-                Podcasts = _podcasts.GetPodcastsByDate(date).Select(p => new PodcastDTO
+                Podcasts = _podcasts.GetPodcastsByDate(PodcastType.Podcast, date).Select(p => new PodcastDTO
                 {
                     Title = p.Title,
                     Description = p.Description,
@@ -39,12 +39,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult LatestPodcast()
+        public ActionResult LatestPodcast(PodcastType podcastType)
         {
-            //get our podcaste repository
-            var podcasts = new PodcastRepository();
             //get our latest podcast
-            var latest = podcasts.FindAllActive().Select(p => new PodcastDTO
+            var latest = _podcasts .FindAllActive().Select(p => new PodcastDTO
             {
                 Description = p.Description,
                 FileName = p.Filename,
@@ -53,6 +51,37 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
             }).FirstOrDefault();
             //return our LatestPodcast View - the view should handle not having a podcast
             return View("LatestPodcast", latest);
+        }
+
+        [ChildActionOnly]
+        public ActionResult PodcastsByType(PodcastType podcastType, int number)
+        {
+            var podcasts = _podcasts.GetPodcastsByType(podcastType).Where(p => p.Active);
+            return View("PodcastsByType", podcasts.Select(p => new PodcastDTO
+            {
+                Description = p.Description,
+                FileName = p.Filename,
+                Published = p.Published,
+                Title = p.Title
+            }).Take(number));
+        }
+
+         [ChildActionOnly]
+        public ActionResult PodcastsByTypeAndDate(PodcastType podcastType, int number, string startDate)
+        {
+            var date = new DateTime();
+            if (!DateTime.TryParseExact(startDate, "yyyy-MM", new CultureInfo("en-GB"), DateTimeStyles.None, out date))
+            {
+                date = DateTime.Now;
+            }
+            var podcasts = _podcasts.GetPodcastsByDate(PodcastType.FeaturedPodcast, date);
+            return View("PodcastsByType", podcasts.Select(p => new PodcastDTO
+            {
+                Description = p.Description,
+                FileName = p.Filename,
+                Published = p.Published,
+                Title = p.Title
+            }).Take(number));
         }
     }
 }
