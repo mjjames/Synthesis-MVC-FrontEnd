@@ -20,7 +20,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 			//if we haven't got a home page something is badly wrong
 			if (homePage == null)
 			{
-				throw new Exception("No Home Page Found - There must be a page with an id of HOME");
+				throw new ApplicationException("No Home Page Found - There must be a page with an id of HOME");
 			}
 			//use the home page to add our first nav item
 			var homeItem = new NavigationItem

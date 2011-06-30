@@ -21,28 +21,12 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				//if we have already loaded the site return it
 				if (_site == null)
 				{
-					var uri = GetUri();
-					_site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site(uri);
+					_site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
 				}
 				return _site;
 			}
 		}
 
-		/// <summary>
-		/// Takes the current uri and returns one suitable for finding a site with
-		/// </summary>
-		/// <returns>site uri suitable for searching</returns>
-		private Uri GetUri()
-		{
-			//get our uri
-			var uri = HttpContext.Current.Request.Url;
-			//we can only have a maximum of 1 path segment so take our uri and create a new one from it with only the first url segment if it has one
-			var newUri = new UriBuilder(uri);
-			//take the path and only take everything from the beginning until the first /
-			newUri.Path = newUri.Path.Substring(0, newUri.Path.IndexOf("/"));
-			//retrn the new uri
-			return newUri.Uri;
-		}
 		private readonly CMSDataContext _dc = new CMSDataContext(ConfigurationManager.ConnectionStrings["ourDatabase"].ConnectionString);
 		//Query Methods
 		
