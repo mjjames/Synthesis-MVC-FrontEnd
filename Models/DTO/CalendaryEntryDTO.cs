@@ -1,7 +1,7 @@
 ﻿using System;
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 {
-	public class CalendaryEntryDTO
+	public class CalendarEntryDTO
 	{
         public string Description { get; set; }
         public string Identifier { get; set; }

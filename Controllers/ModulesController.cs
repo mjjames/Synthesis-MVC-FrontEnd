@@ -32,11 +32,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			//get our  next event entry
 			var eventEntry = new GoogleCalendarWrapper.GoogleCalendar(feedURL).GetNextEvent();
 			//convert the eventEntry into a CalendarEntry
-			var whatsonNext = new CalendaryEntryDTO();
+			var whatsonNext = new CalendarEntryDTO();
 
 			if (eventEntry != null)
 			{
-				whatsonNext = new CalendaryEntryDTO
+				whatsonNext = new CalendarEntryDTO
 								{
 									Description = eventEntry.Summary.Text,
 									Location = eventEntry.Locations[0] != null ? eventEntry.Locations[0].ValueString : "",
@@ -65,7 +65,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		{
 			//get a month's worth of entries based upon the start date
 			var eventEntries = new GoogleCalendarWrapper.GoogleCalendar(feedURL)
-				.GetEvents(startDate, startDate.AddMonths(1)).Select(eventEntry => new CalendaryEntryDTO
+				.GetEvents(startDate, startDate.AddMonths(1)).Select(eventEntry => new CalendarEntryDTO
 																					   {
 																						   Identifier = eventEntry.Id.ToString(),
 																						   Description = eventEntry.Content != null ? eventEntry.Content.Content : "",
@@ -76,14 +76,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 																					   }).OrderBy(e => e.Start).ToList();
             if (!eventEntries.Any())
             {
-                eventEntries.Add(new CalendaryEntryDTO { Title = "Event Information Unavailable at this time" });
+                eventEntries.Add(new CalendarEntryDTO { Title = "Event Information Unavailable at this time" });
             }
             else
             {
                 eventEntries = eventEntries.Where(e => e.Start >= DateTime.Now && e.End >= DateTime.Now).ToList();
                 if (!eventEntries.Any())
                 {
-                    eventEntries.Add(new CalendaryEntryDTO { Title = "No More Events This Month" });
+                    eventEntries.Add(new CalendarEntryDTO { Title = "No More Events This Month" });
                 }
             }
 
