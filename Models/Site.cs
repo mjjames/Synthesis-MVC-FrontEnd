@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using mjjames.DataContexts;
 using System.Configuration;
+using System.Web;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 {
@@ -15,8 +16,28 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		public string HostName { get; set; }
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Takes the current uri and returns one suitable for finding a site with
+		/// </summary>
+		public Site(){
+			//get our uri
+			var uri = HttpContext.Current.Request.Url;
+			//we can only have a maximum of 1 path segment so take our uri and create a new one from it with only the first url segment if it has one
+			var newUri = new UriBuilder(uri);
+			//take the path and only take everything from the beginning until the first /
+			newUri.Path = newUri.Path.Substring(0, newUri.Path.IndexOf("/"));
+			//remove the querystring
+			newUri.Query = "";
+			//Init the site object
+			Init(newUri.Uri);
+		}
+
 		public Site(Uri siteUri)
 		{
+			Init(siteUri);
+		}
+
+		private void Init(Uri siteUri){
 			var dc = new CMSDataContext(ConfigurationManager.ConnectionStrings["ourDatabase"].ConnectionString);
 			//first find the site that matches the provided uri
 			var site = (from s in dc.Sites
@@ -30,18 +51,17 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 				//we are done so quit
 				return;
 			}
-			
+
 			//if we failed to match try and find a site that matches just the hostname of the provided uri
 			site = (from s in dc.Sites
 					where s.hostname == siteUri.Host
 					select s).FirstOrDefault();
-			
+
 			//if we now have a site populate the site details
 			if (site != null)
 			{
 				PopulateSiteDetails(siteUri, site);
 			}
-
 		}
 
 		/// <summary>
