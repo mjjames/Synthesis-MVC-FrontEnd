@@ -42,7 +42,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         public ActionResult LatestPodcast(PodcastType podcastType)
         {
             //get our latest podcast
-            var latest = _podcasts .FindAllActive().Select(p => new PodcastDTO
+			var latest = _podcasts.GetPodcastsByType(podcastType).Where(p => p.Active).Select(p => new PodcastDTO
             {
                 Description = p.Description,
                 FileName = p.Filename,
