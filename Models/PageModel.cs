@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
-using System.Collections.ObjectModel;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Interfaces;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 {
-	public class PageModel : PageDTO
+	public class PageModel : PageDTO, ISitePage
 	{
-		public IList<NavigationItem> MainNavigation { get; set; }
+		public List<NavigationItem> MainNavigation { get; set; }
 		public IList<NavigationItem> FooterNavigation { get; set; }
 	}
 }

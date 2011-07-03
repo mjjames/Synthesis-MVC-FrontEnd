@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
@@ -13,7 +14,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
 		public ActionResult Index()
 		{
-			var articles = _articles.FindAllActive().Select(a => ArticleToDto(a));
+			var articles = _articles.FindAllActive().Select(a => ArticleToDto(a)).ToList();
 			var indexArticle = articles.FirstOrDefault();
 
 			return BuildArticle(articles, indexArticle);
@@ -21,7 +22,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
 		public ActionResult Article(string url)
 		{
-			var articles = _articles.FindAllActive().Select(a => ArticleToDto(a));
+			var articles = _articles.FindAllActive().Select(a => ArticleToDto(a)).ToList();
 			var indexArticle = articles.FirstOrDefault(a => a.Url.EndsWith(url));
 
 			return BuildArticle(articles, indexArticle);
@@ -46,7 +47,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			};
 		}
 
-		private ActionResult BuildArticle(IQueryable<ArticleDTO> articles, ArticleDTO article)
+		private ActionResult BuildArticle(IList<ArticleDTO> articles, ArticleDTO article)
 		{
 			if (article == null)
 			{
@@ -55,7 +56,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
 			var articleModel = new ArticleModel
 			{
-				Articles = articles.ToList(),
+				Articles = articles,
 				MainNavigation = _navs.GetMainNavigation().ToList(),
 				FooterNavigation = _navs.GetFooterNavigation().ToList(),
 				Body = article.Body,
@@ -67,7 +68,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 				Url = article.Url
 
 			};
-			return View(articleModel);
+			return View("Article", articleModel);
 		}
 
 

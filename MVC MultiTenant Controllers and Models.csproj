@@ -84,10 +84,13 @@
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Factories\ExternalModulesFactory.cs" />
+    <Compile Include="Models\ArticleModel.cs" />
+    <Compile Include="Models\DTO\ArticleDTO.cs" />
     <Compile Include="Models\DTO\MediaDTO.cs" />
     <Compile Include="Models\Feeds\PodcastFeed.cs" />
     <Compile Include="Models\DataEntities\Podcast.cs" />
     <Compile Include="Models\DTO\PodcastDTO.cs" />
+    <Compile Include="Models\Interfaces\ISitePage.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\PodcastModel.cs" />
     <Compile Include="Controllers\PodcastsController.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Models\PodcastType.cs" />
     <Compile Include="Models\Site.cs" />
+    <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\MediaRepository.cs" />
     <Compile Include="Repositories\NavigationRepository.cs" />
