@@ -29,7 +29,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                 Description = "",
                                 PageKey = homePage.page_key,
                                 Title = "Home",
-                                Url = "/" //note the home page always has a url of /
+                                Url = "/", //note the home page always has a url of /
+                                ImageUrl = homePage.thumbnailimage
                             };
             navItems.Add(homeItem);
 
