@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FlickrNet">
+      <HintPath>..\..\..\WebSites\tedgiffords\TedGiffordsMVC\packages\FlickrNet.3.5.0\lib\net20\FlickrNet.dll</HintPath>
+    </Reference>
     <Reference Include="Google.GData.AccessControl, Version=1.4.0.2, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External References\Google.GData.AccessControl.dll</HintPath>
@@ -78,6 +81,7 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
+    <Compile Include="Controllers\FlickrController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\ImageResizerController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
@@ -86,10 +90,13 @@
     <Compile Include="Factories\ExternalModulesFactory.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\DTO\ArticleDTO.cs" />
+    <Compile Include="Models\DTO\FlickrPhotoDto.cs" />
     <Compile Include="Models\DTO\MediaDTO.cs" />
     <Compile Include="Models\Feeds\PodcastFeed.cs" />
     <Compile Include="Models\DataEntities\Podcast.cs" />
     <Compile Include="Models\DTO\PodcastDTO.cs" />
+    <Compile Include="Models\DTO\FlickrSetDTO.cs" />
+    <Compile Include="Models\GalleryModel.cs" />
     <Compile Include="Models\Interfaces\ISitePage.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\PodcastModel.cs" />
@@ -125,11 +132,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="FlickrNet.chm" />
     <None Include="Models\DataClasses.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
