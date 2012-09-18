@@ -87,18 +87,25 @@
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Factories\ExternalModulesFactory.cs" />
     <Compile Include="Models\ArticleModel.cs" />
+    <Compile Include="Models\DataEntities\KeyValuedProject.cs" />
+    <Compile Include="Models\DisplayDate.cs" />
     <Compile Include="Models\DTO\ArticleDTO.cs" />
     <Compile Include="Models\DTO\FlickrPhotoDto.cs" />
+    <Compile Include="Models\DTO\KeyValueDto.cs" />
     <Compile Include="Models\DTO\MediaDTO.cs" />
+    <Compile Include="Models\DTO\ProjectDto.cs" />
     <Compile Include="Models\Feeds\PodcastFeed.cs" />
     <Compile Include="Models\DataEntities\Podcast.cs" />
     <Compile Include="Models\DTO\PodcastDTO.cs" />
     <Compile Include="Models\DTO\FlickrSetDTO.cs" />
     <Compile Include="Models\GalleryModel.cs" />
     <Compile Include="Models\Interfaces\ISitePage.cs" />
+    <Compile Include="Models\MediaInfo.cs" />
     <Compile Include="Models\MediaType.cs" />
+    <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\PodcastModel.cs" />
     <Compile Include="Controllers\PodcastsController.cs" />
     <Compile Include="Models\DataClasses.designer.cs">
@@ -113,9 +120,12 @@
     <Compile Include="Models\ImageResult.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Models\PodcastType.cs" />
+    <Compile Include="Models\ProjectListingModel.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\KeyValueRepository.cs" />
     <Compile Include="Repositories\MediaRepository.cs" />
     <Compile Include="Repositories\NavigationRepository.cs" />
     <Compile Include="Models\PageModel.cs" />
@@ -128,6 +138,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\ProjectsRepository.cs" />
     <Compile Include="Repositories\SiteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
