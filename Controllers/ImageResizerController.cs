@@ -47,11 +47,11 @@ namespace mjjames.Controllers
 			filename = Server.MapPath(String.IsNullOrEmpty(filename) ? "/content/images/noimage.jpg" : "/uploads/" + filename + ".jpg");
 			
 			ResizerImage.ResizerAction action = Enum.IsDefined(typeof(ResizerImage.ResizerAction),
-			                                                   RouteData.GetRequiredString("action"))
+			                                                   RouteData.GetRequiredString("resizeaction"))
 			                                    	?
 			                                    		(ResizerImage.ResizerAction)
 			                                    		Enum.Parse(typeof(ResizerImage.ResizerAction),
-			                                    		           RouteData.GetRequiredString("action"))
+                                                                   RouteData.GetRequiredString("resizeaction"))
 			                                    	: ResizerImage.ResizerAction.resizecrop;
 			var resizerImage = new ResizerImage
 			                            	{
