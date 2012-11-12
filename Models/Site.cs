@@ -57,6 +57,32 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 					where s.hostname == siteUri.Host
 					select s).FirstOrDefault();
 
+            //finally if we are local try and do a local domain check
+            if (site == null && HttpContext.Current.Request.IsLocal)
+            {
+                var host = siteUri.ToString().Replace(".local", ".co.uk");
+                site = (from s in dc.Sites
+                        where s.hostname == host
+						select s).FirstOrDefault();
+
+                //last attempt
+                if (site == null)
+                {
+                    host = siteUri.ToString().Replace(".local", ".org.uk");
+                    site = (from s in dc.Sites
+                            where s.hostname == host
+                            select s).FirstOrDefault();
+                }
+                //if we still fail see if its a ksl site
+                if (site == null)
+                {
+                    host = siteUri.ToString().Replace(".local", ".kslgarageservices.co.uk");
+                    site = (from s in dc.Sites
+                            where s.hostname == host
+                            select s).FirstOrDefault();
+                }
+            }
+
 			//if we now have a site populate the site details
 			if (site != null)
 			{
