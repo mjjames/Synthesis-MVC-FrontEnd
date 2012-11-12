@@ -35,32 +35,48 @@
     <Reference Include="FlickrNet">
       <HintPath>..\..\..\WebSites\tedgiffords\TedGiffordsMVC\packages\FlickrNet.3.5.0\lib\net20\FlickrNet.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.AccessControl, Version=1.4.0.2, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.AccessControl, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\Google.GData.AccessControl.dll</HintPath>
+      <HintPath>packages\Google.GData.AccessControl.2.1.0.0\lib\Google.GData.AccessControl.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Calendar, Version=1.4.0.2, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Calendar, Version=2.1.0.0, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\Google.GData.Calendar.dll</HintPath>
+      <HintPath>packages\Google.GData.Calendar.2.1.0.0\lib\Google.GData.Calendar.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Client, Version=1.4.0.2, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Client, Version=2.1.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\Google.GData.Client.dll</HintPath>
+      <HintPath>packages\Google.GData.Client.2.1.0.0\lib\Google.GData.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Extensions, Version=1.4.0.2, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Extensions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\Google.GData.Extensions.dll</HintPath>
+      <HintPath>packages\Google.GData.Extensions.2.1.0.0\lib\Google.GData.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.GoogleBase, Version=1.4.0.2, Culture=neutral, PublicKeyToken=b361faa2ad5bd3db, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\Google.GData.GoogleBase.dll</HintPath>
+      <HintPath>packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+    <Reference Include="mjjames.BibleGateway, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External References\log4net.dll</HintPath>
+      <HintPath>packages\mjjames.BibleGateway.1.0.0.0\lib\net35\mjjames.BibleGateway.dll</HintPath>
     </Reference>
-    <Reference Include="Recaptcha">
-      <HintPath>..\..\..\Resources\reCaptcha\bin\Release\Recaptcha.dll</HintPath>
+    <Reference Include="mjjames.core, Version=1.0.4693.24875, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\mjjames.core.1.0.4693.24875\lib\net35\mjjames.core.dll</HintPath>
+    </Reference>
+    <Reference Include="mjjames.GoogleCalendarWrapper, Version=1.0.4693.25264, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\mjjames.GoogleCalendarWrapper.1.0.4693.25264\lib\net35\mjjames.GoogleCalendarWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="mjjames.Imaging, Version=1.0.4693.25671, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\mjjames.Imaging.1.0.4693.25671\lib\net35\mjjames.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -149,6 +165,7 @@
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="MVC MultiTenant Controllers and Models.nuspec" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -163,26 +180,12 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BibleGatewayWrapper\BibleGateway\mjjames.BibleGateway.csproj">
-      <Project>{E8B1E4BC-0539-4CC5-AEDF-617461288E4E}</Project>
-      <Name>mjjames.BibleGateway</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\classes\Imaging\Imaging.csproj">
-      <Project>{0DC543BE-B98F-4D32-BCFB-C65BACAAF347}</Project>
-      <Name>Imaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\classes\mjjames.core\mjjames.core\mjjames.core.csproj">
-      <Project>{B8488B6E-F1E4-4C64-A39D-5C853169DCE5}</Project>
-      <Name>mjjames.core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GoogleCalendarGateway\GoogleCalendarWrapper\mjjames.GoogleCalendarWrapper.csproj">
-      <Project>{C52ACAAB-A349-484E-97D2-92E1AC666CB8}</Project>
-      <Name>mjjames.GoogleCalendarWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
