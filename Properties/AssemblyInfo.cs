@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MVC MultiTenant Controllers and Models")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MK Synthesis MVC Controllers and Models")]
+[assembly: AssemblyDescription("MVC backing assemblies for a MK Synthesis Website")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MJJames")]
-[assembly: AssemblyProduct("MVC MultiTenant Controllers and Models")]
-[assembly: AssemblyCopyright("Copyright © MJJames 2010")]
+[assembly: AssemblyProduct("MK Synthesis")]
+[assembly: AssemblyCopyright("Copyright © MJJames 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
