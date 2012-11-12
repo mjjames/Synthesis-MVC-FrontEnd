@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using mjjames.DataEntities;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
+using System.Globalization;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
@@ -13,6 +15,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	{
 		readonly PageRepository _pages = new PageRepository();
 		readonly NavigationRepository _navs = new NavigationRepository();
+        readonly KeyValueRepository _keyvalueRepository = new KeyValueRepository();
 
 		/// <summary>
 		/// Default catch all, calls home
@@ -66,6 +69,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			{
 				Response.Redirect(ourPage.linkurl, true);
 			}
+            var textInfo = CultureInfo.CurrentCulture.TextInfo;
 
 			PageModel newPage = new PageModel
 							{
@@ -91,7 +95,15 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 								ShowOnHome = ourPage.showonhome,
 								SortOrder = ourPage.sortorder,
 								ThumbnailImage = ourPage.thumbnailimage,
-								Title = ourPage.title
+								Title = ourPage.title,
+                                KeyValues = _keyvalueRepository.ByLink(ourPage.page_key, "pagelookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>
+                                                                                                          new KeyValueDto
+                                                                                                          {
+                                                                                                              Id = kv.keyvalue_key,
+                                                                                                              Title = textInfo.ToTitleCase(kv.lookup.title),
+                                                                                                              Value = textInfo.ToTitleCase(kv.value)
+
+                                                                                                          })
 							};
 			if (!String.IsNullOrEmpty(newPage.ThumbnailImage))
 			{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 {
@@ -40,6 +41,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 		public string Password { get; set;}
 
 		public int? SiteFKey { get; set;}
+
+        public Dictionary<string, KeyValueDto> KeyValues { get; set; }
 
 	}
 }
