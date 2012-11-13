@@ -1477,7 +1477,7 @@ namespace mjjames.DataEntities
 		
 		private string _value;
 		
-		private byte _active;
+		private bool _active;
 		
 		private EntitySet<KeyValue> _keyvalues;
 		
@@ -1503,7 +1503,7 @@ namespace mjjames.DataEntities
     partial void OntypeChanged();
     partial void OnvalueChanging(string value);
     partial void OnvalueChanged();
-    partial void OnactiveChanging(byte value);
+    partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
     #endregion
 		
@@ -1617,8 +1617,8 @@ namespace mjjames.DataEntities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="TinyInt NOT NULL")]
-		public byte active
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
 		{
 			get
 			{

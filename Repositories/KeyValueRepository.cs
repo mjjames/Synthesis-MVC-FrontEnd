@@ -37,7 +37,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
         public IQueryable<KeyValue> FindAllActive()
         {
-            return _dc.KeyValues.Where(kv => kv.lookup.active == 1 && kv.Lookup1.active == 1);
+            return _dc.KeyValues.Where(kv => kv.lookup.active && kv.Lookup1.active);
         }
 
         public KeyValue Get(int key)
