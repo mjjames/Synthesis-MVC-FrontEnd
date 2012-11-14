@@ -28,7 +28,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		public Media Get(int key)
 		{
 			return (from m in _dc.Medias
-					where m.media_key == key
+					where m.media_key == key && m.active
 					select m).FirstOrDefault();
 		}
 
@@ -42,6 +42,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		{
 			return from m in _dc.Medias
 				   where m.Lookup.lookup_id == lookupID
+                   && m.active
 				   select m;
 		}
 
@@ -49,6 +50,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		{
 			return from ml in _dc.MediaLinks
 					where ml.Lookup.lookup_id == mediaLinkID
+                    && ml.Media.active
 					select ml.Media;
 		}
 	}
