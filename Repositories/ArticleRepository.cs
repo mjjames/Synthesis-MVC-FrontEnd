@@ -30,12 +30,12 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
 		public System.Linq.IQueryable<Article> FindAll()
 		{
-			return _dc.Articles.Where(a => a.site_fkey.Equals(Site.Key));
+			return _dc.Articles.Where(a => a.site_fkey.Equals(Site.Key)).OrderByDescending(a => a.start_date).ThenByDescending(a => a.sortorder);
 		}
 
 		public System.Linq.IQueryable<Article> FindAllActive()
 		{
-			return _dc.Articles.Where(a => a.site_fkey.Equals(Site.Key) && a.active);
+			return FindAll().Where(a => a.active);
 		}
 
 		public Article Get(int key)
