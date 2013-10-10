@@ -40,6 +40,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
         {
             return from p in _dc.Projects
                    where p.site_fkey == Site.Key
+                   orderby p.start_date descending , p.end_date descending 
                    select p;
 
         }
