@@ -11,8 +11,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	[HandleError]
 	public class FormsController : Controller
 	{
-		readonly PageRepository _pages = new PageRepository();
-		readonly NavigationRepository _navs = new NavigationRepository();
+	    private readonly PageModelRepository _pageModelRepository = new PageModelRepository();
 
 
 		//
@@ -24,57 +23,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		public ActionResult ContactUsIndex()
 		{
 			//bit of a trick here - load the page action result and then pull just the model out and pass that to our view
-
-			var pageData = BuildPage(_pages.Get("contactus"));
-
-			return View(pageData);
+            return View(_pageModelRepository.FromId("contactus"));
 		}
-
-		//converts a Page into a PageModel
-		private PageModel BuildPage(DataEntities.Page ourPage)
-		{
-			if (ourPage == null)
-			{
-				return new PageModel
-						{
-							FooterNavigation = _navs.GetFooterNavigation().ToList(),
-							MainNavigation = _navs.GetMainNavigation().ToList()
-						};
-			}
-
-			PageModel newPage = new HomePageModel
-			{
-				AccessKey = ourPage.accesskey,
-				Active = ourPage.active,
-				Body = ourPage.body,
-				FooterNavigation = _navs.GetFooterNavigation().ToList(),
-				LastModified = ourPage.lastmodified,
-				LinkURL = ourPage.linkurl,
-				MainNavigation = _navs.GetMainNavigation().ToList(),
-				MetaDescription = ourPage.metadescription,
-				MetaKeywords = ourPage.metakeywords,
-				NavTitle = ourPage.navtitle,
-				PageFKey = ourPage.page_fkey,
-				PageKey = ourPage.page_key,
-				PageUrl = ourPage.page_url,
-				PageID = ourPage.pageid,
-				Password = ourPage.password,
-				PasswordProtect = ourPage.passwordprotect,
-				ShowInFeaturedNav = ourPage.showinfeaturednav,
-				ShowInFooter = ourPage.showinfooter,
-				ShowInNav = ourPage.showinnav,
-				ShowOnHome = ourPage.showonhome,
-				SortOrder = ourPage.sortorder,
-				ThumbnailImage = ourPage.thumbnailimage,
-				Title = ourPage.title
-			};
-			if (!String.IsNullOrEmpty(newPage.ThumbnailImage))
-			{
-				newPage.ThumbnailImage = System.IO.Path.Combine(ConfigurationManager.AppSettings["uploaddir"], newPage.ThumbnailImage);
-			}
-			return newPage;
-		}
-
 		/// <summary>
 		/// sends the contact us form
 		/// </summary>
@@ -83,7 +33,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult ContactUsIndex(string name, string email, string message, bool captchaValid)
 		{
-			var pageData = BuildPage(_pages.Get("contactus"));
+		    var pageData = _pageModelRepository.FromId("contactus");
 
 			ViewData["name"] = name;
 			ViewData["email"] = email;
@@ -113,7 +63,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			objEmail.To.Add("mike+debug@mjjames.co.uk");
 #else
 			objEmail.To.Add(ConfigurationManager.AppSettings["enquiryEmailTo"]);
-			objEmail.Bcc.Add(ConfigurationManager.AppSettings["enquiryEmailBCC"]);
+            var bcc = ConfigurationManager.AppSettings["enquiryEmailBCC"];
+            if (!String.IsNullOrWhiteSpace(bcc))
+            {
+                objEmail.Bcc.Add(bcc);
+            }
 #endif
 			try
 			{
