@@ -7,7 +7,7 @@ using System;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
-	public class PageRepository : IRepository<Page>
+	internal class PageRepository : IRepository<Page>
 	{
 		private mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;
 

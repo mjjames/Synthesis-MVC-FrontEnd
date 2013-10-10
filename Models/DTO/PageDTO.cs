@@ -43,6 +43,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 		public int? SiteFKey { get; set;}
 
         public Dictionary<string, KeyValueDto> KeyValues { get; set; }
+        public IEnumerable<MediaDTO> GalleryImages { get; set; }
 
 	}
 }

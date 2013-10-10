@@ -13,9 +13,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	[HandleError]
 	public class PagesController : Controller
 	{
-		readonly PageRepository _pages = new PageRepository();
-		readonly NavigationRepository _navs = new NavigationRepository();
-        readonly KeyValueRepository _keyvalueRepository = new KeyValueRepository();
+	    readonly PageModelRepository pageModelRepository = new PageModelRepository();
 
 		/// <summary>
 		/// Default catch all, calls home
@@ -33,13 +31,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
-			var ourPage = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pages.Get("HOME") : _pages.GetPageFromUrl(id);
-			return BuildPage(ourPage);
+            var pageModel = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? pageModelRepository.FromId("HOME") : pageModelRepository.FromUrl(id);
+			return BuildView(pageModel);
 		}
 
 		public ActionResult PageFromID(string id)
 		{
-			return BuildPage(_pages.Get(id));
+		    var pageModel = pageModelRepository.FromId(id);
+            return BuildView(pageModel);
 		}
 
 		/// <summary>
@@ -49,87 +48,51 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult PageFromKey(int key)
 		{
-			var ourPage = _pages.Get(key);
+            var pageModel = pageModelRepository.FromId(key);
 
-			return BuildPage(ourPage);
+            return BuildView(pageModel);
 		}
 
 		/// <summary>
 		/// Takes a Page and converts it into a PageModel with Navigations
 		/// </summary>
-		/// <param name="ourPage">Page to load</param>
+		/// <param name="model">the View model</param>
 		/// <returns></returns>
-		private ActionResult BuildPage(Page ourPage)
+		private ActionResult BuildView(PageModel model)
 		{
-			if (ourPage == null)
+            if (model == null)
 			{
 				return View("NotFound");
 			}
-			if (!String.IsNullOrEmpty(ourPage.linkurl))
+            if (!String.IsNullOrEmpty(model.LinkURL))
 			{
-				Response.Redirect(ourPage.linkurl, true);
+                Response.Redirect(model.LinkURL, true);
 			}
-            var textInfo = CultureInfo.CurrentCulture.TextInfo;
+            
+            //default to the page template
+            var templateName = "Page";
 
-			PageModel newPage = new PageModel
-							{
-								AccessKey = ourPage.accesskey,
-								Active = ourPage.active,
-								Body = ourPage.body,
-								FooterNavigation = _navs.GetFooterNavigation().ToList(),
-								LastModified = ourPage.lastmodified,
-								LinkURL = ourPage.linkurl,
-								MainNavigation = _navs.GetMainNavigation().ToList(),
-								MetaDescription = ourPage.metadescription,
-								MetaKeywords = ourPage.metakeywords,
-								NavTitle = ourPage.navtitle,
-								PageFKey = ourPage.page_fkey,
-								PageKey = ourPage.page_key,
-								PageUrl = ourPage.page_url,
-								PageID = ourPage.pageid,
-								Password = ourPage.password,
-								PasswordProtect = ourPage.passwordprotect,
-								ShowInFeaturedNav = ourPage.showinfeaturednav,
-								ShowInFooter = ourPage.showinfooter,
-								ShowInNav = ourPage.showinnav,
-								ShowOnHome = ourPage.showonhome,
-								SortOrder = ourPage.sortorder,
-								ThumbnailImage = ourPage.thumbnailimage,
-								Title = ourPage.title,
-                                KeyValues = _keyvalueRepository.ByLink(ourPage.page_key, "pagelookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>
-                                                                                                          new KeyValueDto
-                                                                                                          {
-                                                                                                              Id = kv.keyvalue_key,
-                                                                                                              Title = textInfo.ToTitleCase(kv.lookup.title),
-                                                                                                              Value = textInfo.ToTitleCase(kv.value)
-
-                                                                                                          })
-							};
-			if (!String.IsNullOrEmpty(newPage.ThumbnailImage))
+			if (!String.IsNullOrEmpty(model.PageID))
 			{
-				newPage.ThumbnailImage = System.IO.Path.Combine(ConfigurationManager.AppSettings["uploaddir"], newPage.ThumbnailImage);
+
+                switch (model.PageID.ToUpper())
+                {
+                    case "HOME":
+                        templateName = "Home";
+                        break;
+                    case "SITEMAP":
+                            templateName = "SiteMap";
+                            break;
+                    case "CONTACTUS":
+                            return RedirectToAction("ContactUsIndex", "Forms");
+                    default:
+                        //if we don't match any other special cases use the page id as the view name
+                        templateName = model.PageID;
+                        break;
+                }
 			}
 
-			if (!String.IsNullOrEmpty(newPage.PageID))
-			{
-				if (newPage.PageID.Equals("HOME", StringComparison.OrdinalIgnoreCase))
-				{
-					var homePage = new HomePageModel(newPage);
-					homePage.HomeNavigation = _navs.GetHomePageNavigation().ToList();
-					return View("Home", homePage);
-				}
-
-				if (newPage.PageID.Equals("SITEMAP", StringComparison.OrdinalIgnoreCase))
-				{
-					var siteMap = new SiteMapPageModel(newPage);
-					siteMap.SiteMapNavigation = _navs.GetSiteMapNavigation().ToList();
-					return View("SiteMap", siteMap);
-				}
-			}
-			
-			//TODO: Add templating by fiddling the view
-			var templateView = "Page";
-			return View(templateView, newPage);
+			return View(templateName, model);
 		}
 
 	   
