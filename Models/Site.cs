@@ -81,6 +81,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
                             where s.hostname == host
                             select s).FirstOrDefault();
                 }
+                //failing that just load the first site taht is active
+                if (site == null)
+                {
+                    site = dc.Sites.FirstOrDefault(s => s.active);
+                }
             }
 
 			//if we now have a site populate the site details
