@@ -54,6 +54,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
         private IEnumerable<NavigationItem> BuildPageTree(string parentUrl, IEnumerable<Page> pages, Func<Page, string, List<NavigationItem>> childpagesFilter)
         {
             var childPages = (from p in pages
+                              orderby p.sortorder
                               select new NavigationItem
                               {
                                   Title = p.navtitle,
