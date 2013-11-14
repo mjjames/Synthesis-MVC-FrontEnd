@@ -43,6 +43,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 			SortOrder = model.SortOrder;
 			ThumbnailImage = model.ThumbnailImage;
 			Title = model.Title;
+            PageTitle = model.PageTitle;
 		}
 		public IList<NavigationItem> HomeNavigation { get; set; }
 	}

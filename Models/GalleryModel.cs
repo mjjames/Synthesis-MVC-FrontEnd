@@ -14,5 +14,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
         public string Title { get; set; }
         public FlickrSetDto GalleryInfo { get; set; }
         public IEnumerable<FlickrPhotoDto> Photos { get; set; }
+        public string PageTitle { get { return Title; } }
     }
 }

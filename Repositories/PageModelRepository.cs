@@ -79,6 +79,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 SortOrder = entity.sortorder,
                 ThumbnailImage = entity.thumbnailimage,
                 Title = entity.title,
+                PageTitle = string.IsNullOrWhiteSpace(entity.pagetitle)? entity.title : entity.pagetitle,
                 KeyValues = _keyvalueRepository.ByLink(entity.page_key, "pagelookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>
                                                                                           new KeyValueDto
                                                                                           {

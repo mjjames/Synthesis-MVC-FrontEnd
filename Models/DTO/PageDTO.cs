@@ -13,8 +13,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 		public string Title { get; set; }
 
 		public char? AccessKey { get; set; }
-		public string MetaDescription;
-		public string MetaKeywords;
+		public string MetaDescription {get;set;}
+        public string MetaKeywords { get; set; }
+        public string PageTitle { get; set; }
 
 		public string Body { get; set; }
 

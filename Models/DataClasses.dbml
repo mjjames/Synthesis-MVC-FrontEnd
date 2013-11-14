@@ -64,7 +64,7 @@
       <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="BIT NOT NULL" CanBeNull="false" />
       <Association Name="Lookup_KeyValue" Member="keyvalues" ThisKey="lookup_key" OtherKey="link_lookup" Type="KeyValue" />
       <Association Name="Lookup_KeyValue1" Member="KeyValues1" Storage="_keyvalues1" ThisKey="lookup_key" OtherKey="key_lookup" Type="KeyValue" />
       <Association Name="Lookup_MarketingSite" Member="MarketingSites" Storage="_marketingsites" ThisKey="lookup_key" OtherKey="template_lookup" Type="MarketingSite" />
@@ -176,6 +176,7 @@
       <Column Name="passwordprotect" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="pagetitle" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Association Name="Page_Page" Member="Pages" ThisKey="page_key" OtherKey="page_fkey" Type="Page" />
       <Association Name="Site_Page" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
       <Association Name="Page_Page" Member="Page1" ThisKey="page_fkey" OtherKey="page_key" Type="Page" IsForeignKey="true" />

@@ -24,5 +24,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
         {
             get { return "404 Page Not Found"; }
         }
+
+        public string PageTitle { get { return Title; } }
     }
 }

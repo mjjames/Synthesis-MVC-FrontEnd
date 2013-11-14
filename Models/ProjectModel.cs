@@ -20,5 +20,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             get;
             set;
         }
+
+        public string PageTitle { get { return Title; } }
     }
 }

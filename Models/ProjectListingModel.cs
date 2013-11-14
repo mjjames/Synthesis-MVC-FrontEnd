@@ -32,5 +32,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
         public int ProjectYear { get; set; }
 
         public string Description { get; set; }
+        public string PageTitle { get { return Title; } }
     }
 }
