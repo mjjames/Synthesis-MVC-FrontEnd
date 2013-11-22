@@ -81,13 +81,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 Title = entity.title,
                 PageTitle = string.IsNullOrWhiteSpace(entity.pagetitle)? entity.title : entity.pagetitle,
                 KeyValues = _keyvalueRepository.ByLink(entity.page_key, "pagelookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>
-                                                                                          new KeyValueDto
-                                                                                          {
-                                                                                              Id = kv.keyvalue_key,
-                                                                                              Title = textInfo.ToTitleCase(kv.lookup.title),
-                                                                                              Value = textInfo.ToTitleCase(kv.value)
-
-                                                                                          }),
+                                                                                          new KeyValueDto(kv.keyvalue_key,kv.lookup.title,kv.value)
+                                                                                          ),
                 GalleryImages = _mediaRepository.GetByMediaLinkType("page_galleryimage")
                                 .Where(m => m.active && m.MediaLinks.Any(ml => ml.link_fkey == entity.page_key))
                                 .Select(m => new MediaDTO

@@ -52,14 +52,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     },
                     Title = p.title,
                     Url = p.url,
-                    KeyValues = _keyvalueRepository.ByLink(p.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>
-                                                                                                           new KeyValueDto
-                                                                                                           {
-                                                                                                               Id = kv.keyvalue_key,
-                                                                                                               Title = textInfo.ToTitleCase(kv.lookup.title),
-                                                                                                               Value = textInfo.ToTitleCase(kv.value)
-
-                                                                                                           })
+                    KeyValues = _keyvalueRepository.ByLink(p.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv => new KeyValueDto(kv.keyvalue_key, kv.lookup.title, kv.value))
                 });
 
             var pageContent = _page.Get("PROJECTS");
