@@ -30,9 +30,20 @@ namespace mjjames.Controllers
 			int.TryParse(RouteData.Values["width"].ToString(), out width);
 
 			//to stop abuse and empty values set some defaults if to small or big
-		
-			height = height <= 0 || height >= 700 ? 200 : height;
-			width = width <= 0 || width>= 970 ? 200 : width;
+
+            int maxHeight = 700;
+            int maxWidth = 970;
+            int configHeight;
+            int configWidth;
+
+            int.TryParse(ConfigurationManager.AppSettings["ImageResizer:MaxHeight"], out configHeight);
+            int.TryParse(ConfigurationManager.AppSettings["ImageResizer:MaxWidth"], out configWidth);
+
+            maxHeight = configHeight > 0 ? configHeight : maxHeight;
+            maxWidth = configWidth > 0 ? configWidth : maxWidth; 
+
+			height = height <= 0 || height >= maxHeight ? maxHeight : height;
+			width = width <= 0 || width>= 970 ? maxWidth : width;
 			
 			if(!String.IsNullOrEmpty(filename)) //do a file system check
 			{
