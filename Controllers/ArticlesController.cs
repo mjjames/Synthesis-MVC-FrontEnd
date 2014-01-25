@@ -22,10 +22,22 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
         public ActionResult Article(string url)
         {
-            var articles = _articles.FindAllActive().Select(a => ArticleToDto(a)).ToArray().OrderByDescending(a => a.Date.StartDate).ToList();
+            var articles = GetArticleListing();
             var indexArticle = articles.FirstOrDefault(a => a.Url.EndsWith(url));
 
             return BuildArticle(articles, indexArticle);
+        }
+
+        private List<ArticleDTO> GetArticleListing()
+        {
+            var articles = _articles.FindAllActive().Select(a => ArticleToDto(a)).ToArray().OrderByDescending(a => a.Date.StartDate).ToList();
+            return articles;
+        }
+
+        [ChildActionOnly]
+        public ActionResult ArticleListing()
+        {
+            return View(GetArticleListing());
         }
 
         private ArticleDTO ArticleToDto(DataEntities.Article article)
@@ -42,7 +54,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 },
                 InFeed = article.include_in_feed,
                 Description = article.shortdescription,
-                ThumbnailImage = article.thumbnailimage
+                ThumbnailImage = article.thumbnailimage,
+                MetaDescription = article.metadescription,
+                PageTitle = article.pagetitle
 
             };
         }

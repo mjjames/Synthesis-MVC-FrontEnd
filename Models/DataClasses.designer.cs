@@ -257,6 +257,10 @@ namespace mjjames.DataEntities
 		
 		private System.Nullable<int> _site_fkey;
 		
+		private string _pagetitle;
+		
+		private string _metadescription;
+		
 		private EntityRef<Site> _site;
 		
     #region Extensibility Method Definitions
@@ -291,6 +295,10 @@ namespace mjjames.DataEntities
     partial void OnvirtualurlChanged();
     partial void Onsite_fkeyChanging(System.Nullable<int> value);
     partial void Onsite_fkeyChanged();
+    partial void OnpagetitleChanging(string value);
+    partial void OnpagetitleChanged();
+    partial void OnmetadescriptionChanging(string value);
+    partial void OnmetadescriptionChanged();
     #endregion
 		
 		public Article()
@@ -579,6 +587,46 @@ namespace mjjames.DataEntities
 					this._site_fkey = value;
 					this.SendPropertyChanged("site_fkey");
 					this.Onsite_fkeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pagetitle", DbType="nvarchar(max)", CanBeNull=false)]
+		public string pagetitle
+		{
+			get
+			{
+				return this._pagetitle;
+			}
+			set
+			{
+				if ((this._pagetitle != value))
+				{
+					this.OnpagetitleChanging(value);
+					this.SendPropertyChanging();
+					this._pagetitle = value;
+					this.SendPropertyChanged("pagetitle");
+					this.OnpagetitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_metadescription", DbType="nvarchar(max)", CanBeNull=false)]
+		public string metadescription
+		{
+			get
+			{
+				return this._metadescription;
+			}
+			set
+			{
+				if ((this._metadescription != value))
+				{
+					this.OnmetadescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._metadescription = value;
+					this.SendPropertyChanged("metadescription");
+					this.OnmetadescriptionChanged();
 				}
 			}
 		}
@@ -4257,6 +4305,10 @@ namespace mjjames.DataEntities
 		
 		private System.Nullable<int> _site_fkey;
 		
+		private string _metadescription;
+		
+		private string _pagetitle;
+		
 		private EntitySet<Testimony> _testimonies;
 		
 		private EntityRef<Site> _site;
@@ -4287,6 +4339,10 @@ namespace mjjames.DataEntities
     partial void OnurlChanged();
     partial void Onsite_fkeyChanging(System.Nullable<int> value);
     partial void Onsite_fkeyChanged();
+    partial void OnmetadescriptionChanging(string value);
+    partial void OnmetadescriptionChanged();
+    partial void OnpagetitleChanging(string value);
+    partial void OnpagetitleChanged();
     #endregion
 		
 		public Project()
@@ -4516,6 +4572,46 @@ namespace mjjames.DataEntities
 					this._site_fkey = value;
 					this.SendPropertyChanged("site_fkey");
 					this.Onsite_fkeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_metadescription", DbType="nvarchar(max)", CanBeNull=false)]
+		public string metadescription
+		{
+			get
+			{
+				return this._metadescription;
+			}
+			set
+			{
+				if ((this._metadescription != value))
+				{
+					this.OnmetadescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._metadescription = value;
+					this.SendPropertyChanged("metadescription");
+					this.OnmetadescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pagetitle", DbType="nvarchar(max)", CanBeNull=false)]
+		public string pagetitle
+		{
+			get
+			{
+				return this._pagetitle;
+			}
+			set
+			{
+				if ((this._pagetitle != value))
+				{
+					this.OnpagetitleChanging(value);
+					this.SendPropertyChanging();
+					this._pagetitle = value;
+					this.SendPropertyChanged("pagetitle");
+					this.OnpagetitleChanged();
 				}
 			}
 		}

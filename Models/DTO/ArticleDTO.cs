@@ -21,7 +21,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
 
 		public DateRange Date { get; private set; }
 
-
+        public string MetaDescription { get; set; }
+        public string PageTitle { get; set; }
 
 		public string ThumbnailImage { get; set; }
 	}

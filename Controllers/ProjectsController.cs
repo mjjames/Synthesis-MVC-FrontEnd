@@ -24,6 +24,23 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         /// <returns></returns>
         public ActionResult Index(int year)
         {
+            var activeProjects = GetActiveProjects();
+
+            var pageContent = _page.Get("PROJECTS");
+
+            return View(new ProjectListingModel
+            {
+                FooterNavigation = _navs.GetFooterNavigation().ToList(),
+                MainNavigation = _navs.GetMainNavigation().ToList(),
+                Title = pageContent.title,
+                Description = pageContent.body,
+                Projects = activeProjects,
+                ProjectYear = year
+            });
+        }
+
+        private IEnumerable<ProjectDto> GetActiveProjects()
+        {
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
             var activeProjects = _repository.FindAllActive().Where(p => (p.end_date == null || p.start_date == null || (p.end_date >= DateTime.Today && p.start_date <= DateTime.Today)))
                 .ToList()
@@ -52,20 +69,18 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     },
                     Title = p.title,
                     Url = p.url,
+                    MetaDescription = p.metadescription,
+                    PageTitle = p.pagetitle,
                     KeyValues = _keyvalueRepository.ByLink(p.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv => new KeyValueDto(kv.keyvalue_key, kv.lookup.title, kv.value))
                 });
+            return activeProjects;
+        }
 
-            var pageContent = _page.Get("PROJECTS");
-
-            return View(new ProjectListingModel
-            {
-                FooterNavigation = _navs.GetFooterNavigation().ToList(),
-                MainNavigation = _navs.GetMainNavigation().ToList(),
-                Title = pageContent.title,
-                Description = pageContent.body,
-                Projects = activeProjects,
-                ProjectYear = year
-            });
+        [ChildActionOnly]
+        public ActionResult ActiveProjects()
+        {
+            var activeProjects = GetActiveProjects();
+            return View(activeProjects);
         }
 
         /// <summary>

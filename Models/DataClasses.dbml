@@ -16,6 +16,8 @@
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="virtualurl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pagetitle" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
+      <Column Name="metadescription" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
       <Association Name="Site_Article" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
@@ -195,6 +197,8 @@
       <Column Name="video_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="metadescription" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
+      <Column Name="pagetitle" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
       <Association Name="Project_Testimony" Member="Testimonies" Storage="_testimonies" ThisKey="project_key" OtherKey="project_fkey" Type="Testimony" />
       <Association Name="Site_Project" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
