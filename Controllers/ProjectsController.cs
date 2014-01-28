@@ -71,6 +71,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     Url = p.url,
                     MetaDescription = p.metadescription,
                     PageTitle = p.pagetitle,
+                    ThumbnailImage  = p.thumbnailimage,
                     KeyValues = _keyvalueRepository.ByLink(p.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv => new KeyValueDto(kv.keyvalue_key, kv.lookup.title, kv.value))
                 });
             return activeProjects;
@@ -139,7 +140,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     Title = textInfo.ToTitleCase(kv.lookup.title),
                     Value = textInfo.ToTitleCase(kv.value)
 
-                })
+                }),
+                ThumbnailImage = project.thumbnailimage,
+                MetaDescription = project.metadescription
             };
             return View(projectModel);
         }

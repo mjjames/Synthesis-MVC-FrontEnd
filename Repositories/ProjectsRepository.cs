@@ -67,7 +67,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
         public Project GetProjectFromUrlAndYear(string url, int year)
         {
-            return FindAll().FirstOrDefault(p => p.url.Equals(url) && (p.start_date >= new DateTime(year, 1, 1) && p.start_date <= new DateTime(year, 12, 31)));
+            return FindAll().FirstOrDefault(p => p.url.Equals(url) && (!p.start_date.HasValue ||(p.start_date >= new DateTime(year, 1, 1) && p.start_date <= new DateTime(year, 12, 31))));
         }
 
 

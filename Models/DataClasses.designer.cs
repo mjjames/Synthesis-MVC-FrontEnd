@@ -407,7 +407,7 @@ namespace mjjames.DataEntities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(255)")]
 		public string thumbnailimage
 		{
 			get
@@ -3478,7 +3478,7 @@ namespace mjjames.DataEntities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(255)")]
 		public string thumbnailimage
 		{
 			get
@@ -3879,7 +3879,7 @@ namespace mjjames.DataEntities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(128)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="NVarChar(255)")]
 		public string thumbnailimage
 		{
 			get
@@ -4309,6 +4309,8 @@ namespace mjjames.DataEntities
 		
 		private string _pagetitle;
 		
+		private string _thumbnailimage;
+		
 		private EntitySet<Testimony> _testimonies;
 		
 		private EntityRef<Site> _site;
@@ -4343,6 +4345,8 @@ namespace mjjames.DataEntities
     partial void OnmetadescriptionChanged();
     partial void OnpagetitleChanging(string value);
     partial void OnpagetitleChanged();
+    partial void OnthumbnailimageChanging(string value);
+    partial void OnthumbnailimageChanged();
     #endregion
 		
 		public Project()
@@ -4612,6 +4616,26 @@ namespace mjjames.DataEntities
 					this._pagetitle = value;
 					this.SendPropertyChanged("pagetitle");
 					this.OnpagetitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnailimage", DbType="nvarchar(255)", CanBeNull=false)]
+		public string thumbnailimage
+		{
+			get
+			{
+				return this._thumbnailimage;
+			}
+			set
+			{
+				if ((this._thumbnailimage != value))
+				{
+					this.OnthumbnailimageChanging(value);
+					this.SendPropertyChanging();
+					this._thumbnailimage = value;
+					this.SendPropertyChanged("thumbnailimage");
+					this.OnthumbnailimageChanged();
 				}
 			}
 		}

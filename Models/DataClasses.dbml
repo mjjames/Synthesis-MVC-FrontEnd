@@ -7,7 +7,7 @@
       <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="showonhome" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="sortorder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="start_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
@@ -149,7 +149,7 @@
       <Column Name="showinfeed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="url" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Site_Offer" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>
@@ -165,7 +165,7 @@
       <Column Name="metakeywords" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="showinnav" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="showinfeaturednav" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="showonhome" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
@@ -199,6 +199,7 @@
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="metadescription" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
       <Column Name="pagetitle" Type="System.String" DbType="nvarchar(max)" CanBeNull="false" />
+      <Column Name="thumbnailimage" Type="System.String" DbType="nvarchar(255)" CanBeNull="false" />
       <Association Name="Project_Testimony" Member="Testimonies" Storage="_testimonies" ThisKey="project_key" OtherKey="project_fkey" Type="Testimony" />
       <Association Name="Site_Project" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
     </Type>

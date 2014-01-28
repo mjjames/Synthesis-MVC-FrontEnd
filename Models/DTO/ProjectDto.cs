@@ -16,6 +16,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO
             public Dictionary<string, KeyValueDto> KeyValues { get; set; }
             public string MetaDescription { get; set; }
             public string PageTitle { get; set; }
-            
+            public string ThumbnailImage { get; set; }
+
     }
 }
