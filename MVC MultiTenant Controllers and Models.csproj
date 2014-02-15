@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionResults\RSSActionResult.cs" />
+    <Compile Include="ConfigurationManagerSiteSettings.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
@@ -106,6 +107,8 @@
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Factories\ExternalModulesFactory.cs" />
+    <Compile Include="Helpers\SiteSettings.cs" />
+    <Compile Include="Interfaces\ISiteSettings.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\DataEntities\KeyValuedProject.cs" />
     <Compile Include="Models\DisplayDate.cs" />
@@ -167,7 +170,9 @@
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="MVC MultiTenant Controllers and Models.nuspec" />
+    <None Include="MVC MultiTenant Controllers and Models.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,7 +193,6 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
