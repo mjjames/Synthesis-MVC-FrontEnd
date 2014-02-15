@@ -9,6 +9,5 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		public List<NavigationItem> MainNavigation { get; set; }
 		public IList<NavigationItem> FooterNavigation { get; set; }
 		public IList<ArticleDTO> Articles { get; set; }
-        public string PageTitle { get { return Title; } }
 	}
 }
