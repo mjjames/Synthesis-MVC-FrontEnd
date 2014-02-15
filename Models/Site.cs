@@ -38,6 +38,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		}
 
 		private void Init(Uri siteUri){
+
+            var cachedSite = HttpContext.Current.Cache["site-" + siteUri.ToString()] as mjjames.DataEntities.Site;
+            if (cachedSite != null)
+            {
+                PopulateSiteDetails(siteUri, cachedSite, false);
+                return;
+            }
+
 			var dc = new CMSDataContext(ConfigurationManager.ConnectionStrings["ourDatabase"].ConnectionString);
 			//first find the site that matches the provided uri
 			var site = (from s in dc.Sites
@@ -73,14 +81,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
                             where s.hostname == host
                             select s).FirstOrDefault();
                 }
-                //if we still fail see if its a ksl site
-                if (site == null)
-                {
-                    host = siteUri.ToString().Replace(".local", ".kslgarageservices.co.uk");
-                    site = (from s in dc.Sites
-                            where s.hostname == host
-                            select s).FirstOrDefault();
-                }
+              
                 //failing that just load the first site taht is active
                 if (site == null)
                 {
@@ -100,13 +101,18 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		/// </summary>
 		/// <param name="siteUri"></param>
 		/// <param name="site"></param>
-		private void PopulateSiteDetails(Uri siteUri, mjjames.DataEntities.Site site)
+		private void PopulateSiteDetails(Uri siteUri, mjjames.DataEntities.Site site, bool cacheSite = true)
 		{
 			Key = site.site_key;
 			Name = site.name;
 			HostName = siteUri.Host;
 			//our url base is either all the url path segments or just /
 			UrlBase = siteUri.Segments.Any() ? String.Join("/", siteUri.Segments) : "/";
+
+            if (cacheSite)
+            {
+                HttpContext.Current.Cache.Add("site-" + siteUri.ToString(), site, null, DateTime.Now.AddMinutes(15), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+            }
 		}
 	}
 }
