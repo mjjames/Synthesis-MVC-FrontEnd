@@ -10,24 +10,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
     public class KeyValueRepository : IRepository<KeyValue>
     {
-        private mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;
-
-        /// <summary>
-        /// Site
-        /// </summary>
-        private mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site Site
-        {
-            get
-            {
-                //if we have already loaded the site return it
-                if (_site == null)
-                {
-                    _site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
-                }
-                return _site;
-            }
-        }
-
+      
         private readonly CMSDataContext _dc = new CMSDataContext(ConfigurationManager.ConnectionStrings["ourDatabase"].ConnectionString);
 
         public IQueryable<KeyValue> FindAll()
