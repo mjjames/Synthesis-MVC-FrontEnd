@@ -12,7 +12,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
     public class PageModelRepository
     {
-        readonly PageRepository _pages = new PageRepository();
+        public PageModelRepository()
+        {
+            _site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
+            _pages =  new PageRepository(_site);
+        }
+        readonly mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;
+        readonly PageRepository _pages;
         readonly NavigationRepository _navs = new NavigationRepository();
         readonly KeyValueRepository _keyvalueRepository = new KeyValueRepository();
         readonly MediaRepository _mediaRepository = new MediaRepository();
@@ -72,6 +78,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 PageID = entity.pageid ?? "",
                 Password = entity.password,
                 PasswordProtect = entity.passwordprotect,
+                Site = _site,
                 ShowInFeaturedNav = entity.showinfeaturednav,
                 ShowInFooter = entity.showinfooter,
                 ShowInNav = entity.showinnav,

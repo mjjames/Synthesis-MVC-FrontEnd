@@ -11,22 +11,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 	{
 		private mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;
 
-		/// <summary>
-		/// Site
-		/// </summary>
-		private mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site Site
-		{
-			get
-			{
-				//if we have already loaded the site return it
-				if (_site == null)
-				{
-					_site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
-				}
-				return _site;
-			}
-		}
-
+        internal PageRepository(mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site site)
+        {
+            _site = site;
+        }
+		
 		private readonly CMSDataContext _dc = new CMSDataContext(ConfigurationManager.ConnectionStrings["ourDatabase"].ConnectionString);
 		//Query Methods
 		
@@ -36,7 +25,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		/// <returns>Pages</returns>
 		public IQueryable<Page> FindAll()
 		{
-			return _dc.Pages.Where(p => p.site_fkey.Equals(Site.Key));
+			return _dc.Pages.Where(p => p.site_fkey.Equals(_site.Key));
 		}
 
 		/// <summary>
@@ -47,7 +36,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 		{
 			return from p in _dc.Pages
 				   where p.active == true
-				   && p.site_fkey.Equals(Site.Key)
+				   && p.site_fkey.Equals(_site.Key)
 				   select p;
 		}
 
@@ -64,7 +53,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
 		public Page Get(string id)
 		{
-			return _dc.Pages.SingleOrDefault(p => p.pageid.ToLower() == id.ToLower() && p.site_fkey.Equals(Site.Key));
+			return _dc.Pages.SingleOrDefault(p => p.pageid.ToLower() == id.ToLower() && p.site_fkey.Equals(_site.Key));
 		}
 
 		public Page GetPageFromUrl(string url)
@@ -86,7 +75,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 			//we need to then find a page that matches this url part
 			var pageUrlParts = url.Split(new []{"/"}, System.StringSplitOptions.RemoveEmptyEntries);
 			//find any pages that match our url part 
-			var pages = _dc.Pages.Where(p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(Site.Key));
+			var pages = _dc.Pages.Where(p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(_site.Key));
 			//if we dont have any pages then return null
 			if(!pages.Any()){
 				return null;

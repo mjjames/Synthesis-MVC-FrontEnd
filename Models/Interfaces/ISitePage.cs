@@ -15,5 +15,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Interfaces
         /// The Title that should be used for SEO
         /// </summary>
         string PageTitle { get; }
+
+        Site Site { get; }
 	}
 }

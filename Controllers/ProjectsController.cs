@@ -12,11 +12,18 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
     public class ProjectsController : Controller
     {
-        readonly ProjectRepository _repository = new ProjectRepository();
-        readonly PageRepository _page = new PageRepository();
-        readonly NavigationRepository _navs = new NavigationRepository();
-        readonly MediaRepository _mediaRepository = new MediaRepository();
-        readonly KeyValueRepository _keyvalueRepository = new KeyValueRepository();
+        public ProjectsController()
+        {
+            _site = new Site();
+            _page = new PageRepository(_site);
+        }
+
+        private readonly ProjectRepository _repository = new ProjectRepository();
+        private readonly PageRepository _page;
+        private readonly NavigationRepository _navs = new NavigationRepository();
+        private readonly MediaRepository _mediaRepository = new MediaRepository();
+        private readonly KeyValueRepository _keyvalueRepository = new KeyValueRepository();
+        private readonly Site _site;
 
         /// <summary>
         /// Project Listing Page
@@ -35,7 +42,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 Title = pageContent.title,
                 Description = pageContent.body,
                 Projects = activeProjects,
-                ProjectYear = year
+                ProjectYear = year,
+                Site = _site
             });
         }
 
@@ -71,7 +79,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     Url = p.url,
                     MetaDescription = p.metadescription,
                     PageTitle = p.pagetitle,
-                    ThumbnailImage  = p.thumbnailimage,
+                    ThumbnailImage = p.thumbnailimage,
                     KeyValues = _keyvalueRepository.ByLink(p.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv => new KeyValueDto(kv.keyvalue_key, kv.lookup.title, kv.value))
                 });
             return activeProjects;
@@ -102,7 +110,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 return View("NotFound", new NotFoundModel()
                 {
                     FooterNavigation = _navs.GetFooterNavigation().ToList(),
-                    MainNavigation = _navs.GetMainNavigation().ToList()
+                    MainNavigation = _navs.GetMainNavigation().ToList(),
+                    Site = _site
                 });
             }
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
@@ -131,6 +140,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                                                         Title = textInfo.ToTitleCase(m.title)
                                                     })
                 },
+                Site = _site,
                 Title = project.title,
                 Url = project.url,
                 KeyValues = _keyvalueRepository.ByLink(project.project_key, "projectlookup").ToDictionary(kv => kv.lookup.lookup_id, kv =>

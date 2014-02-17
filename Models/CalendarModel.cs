@@ -25,5 +25,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		/// </summary>
 		public bool IsDetailsPage{get;set;}
 		public string PageTitle{get;set;}
+        public Site Site { get; internal set; }
 	}
 }

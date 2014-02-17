@@ -13,8 +13,12 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	[HandleError]
 	public class PagesController : Controller
 	{
-	    readonly PageModelRepository pageModelRepository = new PageModelRepository();
-
+        readonly PageModelRepository _pageModelRepository;
+        public PagesController()
+        {
+            _pageModelRepository = new PageModelRepository();
+        }
+		
 		/// <summary>
 		/// Default catch all, calls home
 		/// </summary>
@@ -31,14 +35,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
-            var pageModel = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? pageModelRepository.FromId("HOME") : pageModelRepository.FromUrl(id);
+			var pageModel = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pageModelRepository.FromId("HOME") : _pageModelRepository.FromUrl(id);
 			return BuildView(pageModel);
 		}
 
 		public ActionResult PageFromID(string id)
 		{
-		    var pageModel = pageModelRepository.FromId(id);
-            return BuildView(pageModel);
+			var pageModel = _pageModelRepository.FromId(id);
+			return BuildView(pageModel);
 		}
 
 		/// <summary>
@@ -48,9 +52,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult PageFromKey(int key)
 		{
-            var pageModel = pageModelRepository.FromId(key);
+			var pageModel = _pageModelRepository.FromId(key);
 
-            return BuildView(pageModel);
+			return BuildView(pageModel);
 		}
 
 		/// <summary>
@@ -60,36 +64,36 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		private ActionResult BuildView(PageModel model)
 		{
-            if (model == null)
+			if (model == null)
 			{
 				return View("NotFound");
 			}
-            if (!String.IsNullOrEmpty(model.LinkURL))
+			if (!String.IsNullOrEmpty(model.LinkURL))
 			{
-                Response.Redirect(model.LinkURL, true);
+				Response.Redirect(model.LinkURL, true);
 			}
-            
-            //default to the page template
-            var templateName = "Page";
+			
+			//default to the page template
+			var templateName = "Page";
 
 			if (!String.IsNullOrEmpty(model.PageID))
 			{
 
-                switch (model.PageID.ToUpper())
-                {
-                    case "HOME":
-                        templateName = "Home";
-                        break;
-                    case "SITEMAP":
-                            templateName = "SiteMap";
-                            break;
-                    case "CONTACTUS":
-                            return RedirectToAction("ContactUsIndex", "Forms");
-                    default:
-                        //if we don't match any other special cases use the page id as the view name
-                        templateName = model.PageID;
-                        break;
-                }
+				switch (model.PageID.ToUpper())
+				{
+					case "HOME":
+						templateName = "Home";
+						break;
+					case "SITEMAP":
+							templateName = "SiteMap";
+							break;
+					case "CONTACTUS":
+							return RedirectToAction("ContactUsIndex", "Forms");
+					default:
+						//if we don't match any other special cases use the page id as the view name
+						templateName = model.PageID;
+						break;
+				}
 			}
 
 			return View(templateName, model);

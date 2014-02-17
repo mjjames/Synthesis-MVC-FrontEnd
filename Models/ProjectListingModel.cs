@@ -33,5 +33,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 
         public string Description { get; set; }
         public string PageTitle { get { return Title; } }
+        public Site Site { get; internal set; }
     }
 }

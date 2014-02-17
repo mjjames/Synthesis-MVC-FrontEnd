@@ -30,6 +30,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 			PageUrl = model.PageUrl;
 			Password = model.Password;
 			PasswordProtect = model.PasswordProtect;
+			Site = model.Site;
 			ShowInFeaturedNav = model.ShowInFeaturedNav;
 			ShowInFooter = model.ShowInFooter;
 			ShowInNav = model.ShowInNav;

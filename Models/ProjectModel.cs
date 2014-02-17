@@ -20,6 +20,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             get;
             set;
         }
+        public Site Site { get; internal set; }
 
     }
 }
