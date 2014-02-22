@@ -19,8 +19,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Factories
 		public static IGoogleCalendar GetCalendarInstance(string calendarUrl)
 		{
 #if DEBUG
-			//if in debug mode always return the test wrapper which has sample data
-			return new TestGoogleCalendar();
+			//if in debug mode and no url provided always return the test wrapper which has sample data
+			if (string.IsNullOrWhiteSpace(calendarUrl))
+			{
+				return new TestGoogleCalendar();
+			}
 #endif
 
 			//return the full Google Calendar Wrappeer

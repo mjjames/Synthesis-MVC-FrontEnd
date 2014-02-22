@@ -39,6 +39,7 @@
     <Reference Include="FlickrNet">
       <HintPath>..\..\..\WebSites\tedgiffords\TedGiffordsMVC\packages\FlickrNet.3.5.0\lib\net20\FlickrNet.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="mjjames.BibleGateway, Version=1.1.4862.16977, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\mjjames.BibleGateway.1.1\lib\net45\mjjames.BibleGateway.dll</HintPath>
