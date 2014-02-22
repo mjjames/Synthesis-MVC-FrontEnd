@@ -116,6 +116,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         [ChildActionOnly]
         public ActionResult ThisWeek()
         {
+            ViewBag.Site = new Site();
             var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL"), DateTime.Today, DateTime.Today.AddDays(6));
             return View(events);
         }
