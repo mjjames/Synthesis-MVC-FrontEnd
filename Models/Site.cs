@@ -22,6 +22,28 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 
         public IReadOnlyDictionary<string, KeyValueDto> KeyValues { get; private set; }
 
+        public T Setting<T>(string key) where T : IConvertible
+        {
+            if (!KeyValues.ContainsKey(key))
+            {
+                return default(T);
+            }
+            try
+            {
+                return (T)Convert.ChangeType(KeyValues[key].Value, typeof(T));
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
+
+        public string Setting(string key)
+        {
+            return Setting<string>(key);
+        }
+
         /// <summary>
         /// Takes the current uri and returns one suitable for finding a site with
         /// </summary>
@@ -125,7 +147,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 
         private void PopulateKeyValues()
         {
-            if (Key == 0)
+           if (Key == 0)
             {
                 KeyValues = new Dictionary<string, KeyValueDto>();
                 return;
@@ -150,14 +172,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
         {
             Key = site.site_key;
             Name = site.name;
-            HostName = siteUri.ToString();
-            //our url base is either all the url path segments or just /
-            UrlBase = siteUri.Segments.Any() ? String.Join("/", siteUri.Segments) : "/";
+            HostName = site.hostname;
+            UrlBase = new Uri(site.hostname).LocalPath;
 
             if (cacheSite)
             {
                 HttpContext.Current.Cache.Add("site-" + siteUri.ToString(), site, null, DateTime.Now.AddMinutes(_cacheMinutes), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
             }
         }
+
     }
 }
