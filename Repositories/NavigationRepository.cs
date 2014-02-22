@@ -4,6 +4,7 @@ using System.Web;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.DataEntities;
 using System;
+using System.IO;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
@@ -11,10 +12,12 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
     {
         public NavigationRepository()
         {
-            _pageRepository = new PageRepository(new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site());
+            _site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
+            _pageRepository = new PageRepository(_site);
         }
         //all pages come from the page repository - by doing this we don't have to deal with sites ourselves
         private readonly PageRepository _pageRepository;
+        private Models.Site _site;
 
         internal IQueryable<NavigationItem> GetMainNavigation()
         {
@@ -33,7 +36,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                 Description = "",
                                 PageKey = homePage.page_key,
                                 Title = "Home",
-                                Url = "/", //note the home page always has a url of /
+                                Url = _site.UrlBase,
                                 ImageUrl = homePage.thumbnailimage
                             };
             navItems.Add(homeItem);
@@ -42,8 +45,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
             //this then for each child page calls it self - thus recursively builds the tree
             //note we filter the child pages to active and on main nav
             Func<Page, bool> filter = p => p.active.HasValue && p.active.Value && p.showinnav.HasValue && p.showinnav.Value;
-            Func<Page, string, List<NavigationItem>> childPages = (p, parentUrl) => GetChildPages(p, parentUrl + "/" + p.page_url, filter);
-            navItems.AddRange(BuildPageTree("", homePage.Pages.Where(filter).OrderBy(p => p.sortorder), childPages));
+            Func<Page, string, List<NavigationItem>> childPages = (p, parentUrl) => GetChildPages(p, Path.Combine(parentUrl, p.page_url), filter);
+            navItems.AddRange(BuildPageTree(_site.UrlBase, homePage.Pages.Where(filter).OrderBy(p => p.sortorder), childPages));
 
             return navItems.AsQueryable();
         }
@@ -64,8 +67,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                   Title = p.navtitle,
                                   Description = p.metadescription,
                                   PageKey = p.page_key,
-                                  Url = parentUrl + "/" + p.page_url,
-                                  CssClass = GetCssClass(parentUrl + "/" + p.page_url),
+                                  Url = Path.Combine(parentUrl, p.page_url),
+                                  CssClass = GetCssClass(Path.Combine(parentUrl, p.page_url)),
                                   ChildPages = childpagesFilter(p, parentUrl),
                                   ImageUrl = p.thumbnailimage
                               });
@@ -85,7 +88,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
             //simply if our url starts with the url provided then load the child pages
             if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith(url))
             {
-                Func<Page, string, List<NavigationItem>> pages = (p, parentUrl) => GetChildPages(p, parentUrl + "/" + p.page_url, filter);
+                Func<Page, string, List<NavigationItem>> pages = (p, parentUrl) => GetChildPages(p, Path.Combine(parentUrl, p.page_url), filter);
                 childPages.AddRange(BuildPageTree(url, page.Pages.Where(filter).OrderBy(p => p.sortorder), pages));
             }
             return childPages;
@@ -214,7 +217,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 Description = "",
                 PageKey = homePage.page_key,
                 Title = "Home",
-                Url = "/" //note the home page always has a url of /
+                Url = _site.UrlBase
             };
             navItems.Add(homeItem);
 
@@ -222,14 +225,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
             //this then for each child page calls it self - thus recursively builds the tree
             //note we filter the child pages to active and on main nav
             Func<Page, bool> filter = p => p.active.HasValue && p.active.Value;
-            Func<Page, string, List<NavigationItem>> childPages = (page, parentUrl) => GetChildren(page, parentUrl + "/" + page.page_url, filter);
-            navItems.AddRange(BuildPageTree("", homePage.Pages.Where(p => p.active.HasValue && p.active.Value), childPages));
+            Func<Page, string, List<NavigationItem>> childPages = (page, parentUrl) => GetChildren(page, Path.Combine(parentUrl, page.page_url), filter);
+            navItems.AddRange(BuildPageTree(_site.UrlBase, homePage.Pages.Where(p => p.active.HasValue && p.active.Value), childPages));
 
             return navItems.AsQueryable();
         }
         private List<NavigationItem> GetChildren(Page page, string parentUrl, Func<Page, bool> filter)
         {
-            return new List<NavigationItem>(BuildPageTree(parentUrl, page.Pages.Where(filter), (p, url) => GetChildren(p, url + "/" + p.page_url, filter)));
+            return new List<NavigationItem>(BuildPageTree(parentUrl, page.Pages.Where(filter), (p, url) => GetChildren(p, Path.Combine(url, p.page_url), filter)));
         }
     }
 }
