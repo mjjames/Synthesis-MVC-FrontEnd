@@ -11,8 +11,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	[HandleError]
 	public class FormsController : Controller
 	{
-	    private readonly PageModelRepository _pageModelRepository = new PageModelRepository();
-
+	    private readonly PageModelRepository _pageModelRepository;
+        public FormsController()
+        {
+            _pageModelRepository = new PageModelRepository(new Site());
+        }
 
 		//
 		// GET: /ContactUsIndex/

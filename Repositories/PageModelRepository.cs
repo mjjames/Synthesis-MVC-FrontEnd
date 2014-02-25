@@ -12,9 +12,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
     public class PageModelRepository
     {
-        public PageModelRepository()
+        public PageModelRepository(mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site site)
         {
-            _site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
+            _site = site;
             _pages =  new PageRepository(_site);
         }
         readonly mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;

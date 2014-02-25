@@ -13,11 +13,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	[HandleError]
 	public class PagesController : Controller
 	{
-        readonly PageModelRepository _pageModelRepository;
-        public PagesController()
-        {
-            _pageModelRepository = new PageModelRepository();
-        }
+		readonly PageModelRepository _pageModelRepository;
+		readonly mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site _site;
+		public PagesController()
+		{
+			_site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
+			_pageModelRepository = new PageModelRepository(_site);
+		}
 		
 		/// <summary>
 		/// Default catch all, calls home
@@ -35,6 +37,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
+			if ("/" + id == _site.UrlBase)
+			{
+				id = "Home";
+			}
 			var pageModel = (String.IsNullOrEmpty(id) || id.Equals("HOME", StringComparison.OrdinalIgnoreCase)) ? _pageModelRepository.FromId("HOME") : _pageModelRepository.FromUrl(id);
 			return BuildView(pageModel);
 		}
