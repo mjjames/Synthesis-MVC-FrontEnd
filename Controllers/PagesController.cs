@@ -37,7 +37,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
-			if ("/" + id == _site.UrlBase)
+			if (id.Replace("/","") == _site.UrlBase.Replace("/", ""))
 			{
 				id = "Home";
 			}

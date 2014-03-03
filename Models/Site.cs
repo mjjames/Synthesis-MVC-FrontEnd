@@ -55,6 +55,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             var newUri = new UriBuilder(uri);
             //take the path and only take the first segment
             newUri.Path = "/" + (newUri.Uri.Segments.Length > 1 ? newUri.Uri.Segments[1] : "");
+            //ensure path ends /
+            if (!newUri.Path.EndsWith("/"))
+            {
+                newUri.Path = newUri.Path + "/";
+            }
             //remove the querystring
             newUri.Query = "";
             //Init the site object
