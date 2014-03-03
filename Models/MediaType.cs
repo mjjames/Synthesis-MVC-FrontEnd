@@ -9,6 +9,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 	{
 		Banner,
 		GalleryImage,
-        HomePageBanner
+        HomePageBanner,
+        Download
 	}
 }

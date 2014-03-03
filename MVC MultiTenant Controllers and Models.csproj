@@ -107,13 +107,16 @@
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="DatabaseSiteSettings.cs" />
     <Compile Include="Factories\ExternalModulesFactory.cs" />
     <Compile Include="Helpers\SiteSettings.cs" />
     <Compile Include="Interfaces\ISiteSettings.cs" />
+    <Compile Include="MimeMapping.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\DataEntities\KeyValuedProject.cs" />
     <Compile Include="Models\DisplayDate.cs" />
     <Compile Include="Models\DTO\ArticleDTO.cs" />
+    <Compile Include="Models\DTO\DownloadDto.cs" />
     <Compile Include="Models\DTO\FlickrPhotoDto.cs" />
     <Compile Include="Models\DTO\KeyValueDto.cs" />
     <Compile Include="Models\DTO\MediaDTO.cs" />

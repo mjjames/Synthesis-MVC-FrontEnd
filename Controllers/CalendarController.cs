@@ -17,16 +17,18 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
     {
         readonly NavigationRepository _navs = new NavigationRepository();
         private ISiteSettings _siteSettings;
+        private Site _site;
 
         public CalendarController()
-            : this(new ConfigurationManagerSiteSettings())
+            : this(new DatabaseSiteSettings(new Site()))
         {
-
+        
         }
 
         public CalendarController(ISiteSettings siteSettings)
         {
             _siteSettings = siteSettings;
+            _site = new Site();
         }
 
         public ActionResult Calendar(string startDate, string eventID)
@@ -65,7 +67,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     String.IsNullOrEmpty(eventID) ? _siteSettings.GetSetting<string>("CalendarPageTitle") : entry.Title,
                     date.ToString("MMMM yyyy")
                 ),
-                Site = new Site()
+                Site = _site
             };
             return View("Calendar", model);
         }
@@ -109,14 +111,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                     events.Add(new CalendarEntryDTO { Title = "No More Events This Month" });
                 }
             }
-            ViewBag.Site = new Site();
+            ViewBag.Site = _site;
             return View(events);
         }
 
         [ChildActionOnly]
         public ActionResult ThisWeek()
         {
-            ViewBag.Site = new Site();
+            ViewBag.Site = _site;
             var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL"), DateTime.Today, DateTime.Today.AddDays(6));
             return View(events);
         }
