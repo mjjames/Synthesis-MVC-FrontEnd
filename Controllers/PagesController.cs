@@ -37,6 +37,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		/// <returns></returns>
 		public ActionResult Page(string id)
 		{
+            if (_site.Key < 1)
+            {
+                return new HttpNotFoundResult();
+            }
 			if (id.Replace("/","") == _site.UrlBase.Replace("/", ""))
 			{
 				id = "Home";
@@ -72,7 +76,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 		{
 			if (model == null)
 			{
-				return View("NotFound");
+                return new HttpNotFoundResult();
 			}
 			if (!String.IsNullOrEmpty(model.LinkURL))
 			{
