@@ -112,9 +112,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
                     return;
                 }
 
+                var hostOnly = new Uri(siteUri, "/");
                 //if we failed to match try and find a site that matches just the hostname of the provided uri
                 site = (from s in dc.Sites
-                        where s.hostname == siteUri.Host
+                        where s.hostname == hostOnly.ToString()
                         select s).FirstOrDefault();
 
                 //finally if we are local try and do a local domain check
@@ -178,7 +179,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             Key = site.site_key;
             Name = site.name;
             HostName = site.hostname;
-            UrlBase = new Uri(site.hostname).LocalPath;
+            UrlBase = new Uri(site.hostname).AbsolutePath;
 
             if (cacheSite)
             {
