@@ -119,7 +119,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 }
             }
             ViewBag.Site = _site;
-            return View("Month", events);
+            return View(events);
         }
 
         [ChildActionOnly]
