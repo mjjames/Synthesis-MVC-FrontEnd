@@ -93,12 +93,19 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         [ChildActionOnly]
         public ActionResult Month(string startDate)
         {
+            var feedUrl = _siteSettings.GetSetting<string>("GoogleCalendarFeedURL");
+            return MonthCustomFeed(startDate, feedUrl);
+        }
+
+        [ChildActionOnly]
+        public ActionResult MonthCustomFeed(string startDate, string feedUrl)
+        {
             var date = new DateTime();
             if (!DateTime.TryParseExact(startDate, "yyyy-MM", new CultureInfo("en-GB"), DateTimeStyles.None, out date))
             {
                 date = DateTime.Now;
             }
-            var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL"), date, date.AddMonths(1));
+            var events = GetCalendarEvents(feedUrl, date, date.AddMonths(1));
             if (!events.Any())
             {
                 events.Add(new CalendarEntryDTO { Title = "Event Information Unavailable at this time" });
@@ -112,7 +119,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 }
             }
             ViewBag.Site = _site;
-            return View(events);
+            return View("Month", events);
         }
 
         [ChildActionOnly]
