@@ -17,6 +17,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
         internal int Key { get; private set; }
         public string HostName { get; private set; }
         public string Name { get; private set; }
+        public string Password { get; private set; }
+        public bool RequiresLogin { get { return !String.IsNullOrWhiteSpace(Password); } }
 
         private double _cacheMinutes = 15;
 
@@ -153,7 +155,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 
         private void PopulateKeyValues()
         {
-           if (Key == 0)
+            if (Key == 0)
             {
                 KeyValues = new Dictionary<string, KeyValueDto>();
                 return;
@@ -180,12 +182,12 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             Name = site.name;
             HostName = site.hostname;
             UrlBase = new Uri(site.hostname).AbsolutePath;
+            Password = "" + site.password;
 
             if (cacheSite)
             {
                 HttpContext.Current.Cache.Add("site-" + siteUri.ToString(), site, null, DateTime.Now.AddMinutes(_cacheMinutes), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
             }
         }
-
     }
 }

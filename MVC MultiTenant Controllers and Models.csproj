@@ -40,9 +40,8 @@
       <HintPath>..\..\..\WebSites\tedgiffords\TedGiffordsMVC\packages\FlickrNet.3.5.0\lib\net20\FlickrNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="mjjames.BibleGateway, Version=1.2.5176.39231, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\mjjames\websites\WiganMethodistCircuit\packages\mjjames.BibleGateway.1.2\lib\mjjames.BibleGateway.dll</HintPath>
+    <Reference Include="mjjames.BibleGateway">
+      <HintPath>packages\mjjames.BibleGateway.1.1\lib\net45\mjjames.BibleGateway.dll</HintPath>
     </Reference>
     <Reference Include="mjjames.core, Version=1.1.4862.17052, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,9 +94,12 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\PasswordProtectedSiteFilter.cs" />
     <Compile Include="ActionResults\RSSActionResult.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="ConfigurationManagerSiteSettings.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\FlickrController.cs" />

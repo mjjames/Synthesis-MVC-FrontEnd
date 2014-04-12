@@ -5,10 +5,12 @@ using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using System.Net.Mail;
 using System.Configuration;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.ActionFilters;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
 	[HandleError]
+    [PasswordProtectedSiteFilter]
 	public class FormsController : Controller
 	{
 	    private readonly PageModelRepository _pageModelRepository;

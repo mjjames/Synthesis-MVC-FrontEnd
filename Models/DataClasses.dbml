@@ -210,6 +210,7 @@
       <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="hostname" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="nvarchar(255)" CanBeNull="true" />
       <Association Name="Site_Article" Member="Articles" Storage="_articles" ThisKey="site_key" OtherKey="site_fkey" Type="Article" />
       <Association Name="Site_Testimony" Member="Testimonies" Storage="_testimonies" ThisKey="site_key" OtherKey="site_fkey" Type="Testimony" />
       <Association Name="Site_Banner" Member="Banners" Storage="_banners" ThisKey="site_key" OtherKey="site_fkey" Type="Banner" />

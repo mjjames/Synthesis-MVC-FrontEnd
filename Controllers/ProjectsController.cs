@@ -1,4 +1,5 @@
-﻿using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
+﻿using mjjames.MVC_MultiTenant_Controllers_and_Models.ActionFilters;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
+    [PasswordProtectedSiteFilter]
     public class ProjectsController : Controller
     {
         public ProjectsController()
