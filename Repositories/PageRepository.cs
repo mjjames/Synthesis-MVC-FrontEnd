@@ -65,17 +65,25 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 				url = "/" + url;
 			}
 
+            //func that says how to find our page
+			Func<Page, bool> urlFinder;
+			//our page url part is our last item after splitting on /
+			var pageUrlParts = url.Split(new[] { "/" }, System.StringSplitOptions.RemoveEmptyEntries);
+
 			//if the url is just / then we are actually looking for a home page
 			if (url == "/")
 			{
-				url = "/home";
+                //for the home page search for the page with the HOME Page ID
+                urlFinder = p => p.pageid.Equals("HOME", StringComparison.InvariantCultureIgnoreCase) && p.site_fkey.Equals(Site.Key);
+            }
+			//otherwise we need to do some real work
+			else
+			{
+				//we need to then find a page that matches this url part
+				urlFinder = p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(Site.Key);
 			}
-
-			//our page url part is our last item after splitting on /
-			//we need to then find a page that matches this url part
-			var pageUrlParts = url.Split(new []{"/"}, System.StringSplitOptions.RemoveEmptyEntries);
 			//find any pages that match our url part 
-			var pages = _dc.Pages.Where(p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(_site.Key));
+            var pages = _dc.Pages.Where(urlFinder);
 			//if we dont have any pages then return null
 			if(!pages.Any()){
 				return null;
