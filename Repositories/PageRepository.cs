@@ -1,9 +1,9 @@
 ﻿using System.Configuration;
 using System.Linq;
 using System.Web;
-using mjjames.DataEntities;
 using mjjames.DataContexts;
 using System;
+using mjjames.DataEntities;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 {
@@ -74,13 +74,13 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 			if (url == "/")
 			{
                 //for the home page search for the page with the HOME Page ID
-                urlFinder = p => p.pageid.Equals("HOME", StringComparison.InvariantCultureIgnoreCase) && p.site_fkey.Equals(Site.Key);
+                urlFinder = p => p.pageid.Equals("HOME", StringComparison.InvariantCultureIgnoreCase) && p.site_fkey.Equals(_site.Key);
             }
 			//otherwise we need to do some real work
 			else
 			{
 				//we need to then find a page that matches this url part
-				urlFinder = p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(Site.Key);
+				urlFinder = p => p.page_url.Equals(pageUrlParts.Last()) && p.site_fkey.Equals(_site.Key);
 			}
 			//find any pages that match our url part 
             var pages = _dc.Pages.Where(urlFinder);
