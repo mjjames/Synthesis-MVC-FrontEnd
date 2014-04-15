@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
+using mjjames.MVC_MultiTenant_Controllers_and_Models.ActionFilters;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
@@ -55,6 +56,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
             return View(viewName, dtos.AsEnumerable());
         }
 
+        [PasswordProtectedSiteFilter]
         public FilePathResult Download(string filename)
         {
             return File(filename, MimeMapping.GetMimeMapping(filename));
