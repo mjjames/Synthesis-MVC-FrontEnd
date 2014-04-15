@@ -16,6 +16,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
     {
         private Flickr _flickr;
         readonly NavigationRepository _navs = new NavigationRepository();
+        private Site _site;
+        public FlickrController()
+        {
+            _site = new Site();
+        }
 
         private Flickr Flickr
         {
@@ -32,18 +37,18 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 }
                 Flickr.CacheLocation = Server.MapPath(flickrCache);
 
-                string apikey = ConfigurationManager.AppSettings["flickrApiKey"];
+                string apikey = _site.Setting("Flickr:ApiKey");
 
                 if (string.IsNullOrWhiteSpace(apikey))
                 {
-                    throw new ApplicationException("flickrApiKey not set in config");
+                    throw new ApplicationException("flickrApiKey not set in settings");
                 }
 
-                string apisecret = ConfigurationManager.AppSettings["flickrApiSecret"];
+                string apisecret = _site.Setting("Flickr:ApiSecret");
 
                 if (string.IsNullOrWhiteSpace(apisecret))
                 {
-                    throw new ApplicationException("flickrApiSecret not set in config");
+                    throw new ApplicationException("flickrApiSecret not set in settings");
                 }
 
                 _flickr = new Flickr(apikey, apisecret);

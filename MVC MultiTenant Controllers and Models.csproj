@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\PasswordProtectedSiteFilter.cs" />
+    <Compile Include="ActionFilters\RecaptchaFilter.cs" />
     <Compile Include="ActionResults\RSSActionResult.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="ConfigurationManagerSiteSettings.cs" />

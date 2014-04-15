@@ -12,6 +12,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
     public class FeedsController : Controller
     {
         private readonly PodcastRepository _podcasts = new PodcastRepository();
+        private Site _site;
+        public FeedsController()
+        {
+            _site = new Site();
+        }
 
         public ActionResult Podcasts(string feedType)
         {
@@ -29,9 +34,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
             var feed = new PodcastFeed
             {
-                Title = String.Format("{0} - {1}s {2} Feed", ConfigurationManager.AppSettings["SiteName"], podcastType, feedType.ToUpper()),
+                Title = String.Format("{0} - {1}s {2} Feed", _site.Setting("SiteName"), podcastType, feedType.ToUpper()),
                 Link = HttpContext.Request.Url.ToString(),
-                Description = ConfigurationManager.AppSettings[podcastType + "-Description"],
+                Description = _site.Setting("Podcasts:Description:" + podcastType),
                 BuildDate = buildDate.HasValue ? buildDate.Value : DateTime.Now,
                 PubDate = DateTime.Now,
                 FeedItems = data.Select(p => new PodcastDTO()

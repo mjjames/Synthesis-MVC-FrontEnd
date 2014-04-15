@@ -14,9 +14,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 	public class FormsController : Controller
 	{
 	    private readonly PageModelRepository _pageModelRepository;
+        private Site _site;
         public FormsController()
         {
-            _pageModelRepository = new PageModelRepository(new Site());
+            _site = new Site();
+            _pageModelRepository = new PageModelRepository(_site);
         }
 
 		//
@@ -64,16 +66,14 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			{
 				return View(pageData);
 			}
-#if DEBUG
-			objEmail.To.Add("mike+debug@mjjames.co.uk");
-#else
-			objEmail.To.Add(ConfigurationManager.AppSettings["enquiryEmailTo"]);
-            var bcc = ConfigurationManager.AppSettings["enquiryEmailBCC"];
+
+			objEmail.To.Add(_site.Setting("Email:Enquiry:To"));
+            var bcc = _site.Setting("Email:Enquiry:BCC");
             if (!String.IsNullOrWhiteSpace(bcc))
             {
                 objEmail.Bcc.Add(bcc);
             }
-#endif
+
 			try
 			{
 				// ReSharper disable AssignNullToNotNullAttribute
@@ -88,7 +88,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			{
 				pageData.Body = "<h2> Invalid Email Address, please try again </h2> " + String.Format("<p>Supplied Email: {0}  <br /> Supplied Name: {1}</p>", email, name);
 			}
-			objEmail.Subject = ConfigurationManager.AppSettings["enquiryEmailSubject"];
+            objEmail.Subject = _site.Setting("Email:Enquiry:Subject");
 			objEmail.Body = String.Format("{0} \r\n Name: {1} \r\n Email: {2}", message, name, email);
 			objEmail.Priority = MailPriority.High;
 			//send the message
@@ -133,7 +133,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			}
 
 			var messageBody = String.Format("Name: {0}\r\nNumber: {1}\r\nTime Slot: {2})", contactName, contactNumber, timeSlot);
-			var callbackMessage = new MailMessage(ConfigurationManager.AppSettings["callbackFormFromAddress"], ConfigurationManager.AppSettings["callbackFormToAddress"], "IDEA Callback Request", messageBody)
+            var callbackMessage = new MailMessage(_site.Setting("Email:Callback:From"), _site.Setting("Email:Callback:To"), _site.Setting("Email:Callback:Subject"), messageBody)
 			{
 				IsBodyHtml = false
 			};
@@ -143,32 +143,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
 			return View("CallbackComplete");
 
-		}
-	}
-
-	public class CaptchaValidatorAttribute : ActionFilterAttribute
-	{
-		private const string ChallengeFieldKey = "recaptcha_challenge_field";
-		private const string ResponseFieldKey = "recaptcha_response_field";
-
-		public override void OnActionExecuting(ActionExecutingContext filterContext)
-		{
-			var captchaChallengeValue = filterContext.HttpContext.Request.Form[ChallengeFieldKey];
-			var captchaResponseValue = filterContext.HttpContext.Request.Form[ResponseFieldKey];
-			var captchaValidtor = new Recaptcha.RecaptchaValidator
-									  {
-										  PrivateKey = ConfigurationManager.AppSettings["recaptchaPrivateKey"],
-										  RemoteIP = filterContext.HttpContext.Request.UserHostAddress,
-										  Challenge = captchaChallengeValue,
-										  Response = captchaResponseValue
-									  };
-
-			var recaptchaResponse = captchaValidtor.Validate();
-
-			// this will push the result value into a parameter in our Action  
-			filterContext.ActionParameters["captchaValid"] = recaptchaResponse.IsValid;
-
-			base.OnActionExecuting(filterContext);
 		}
 	}
 }
