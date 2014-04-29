@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Security;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models
 {
@@ -50,6 +51,47 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models
         public void RevokeAuthentication()
         {
             HttpContext.Current.Session.Remove(_authenticationKey);
+        }
+    }
+
+    public class FormsAuthenticationBasedAuthenticationService : IAuthenticationService
+    {
+        private Models.Site _site;
+        public FormsAuthenticationBasedAuthenticationService()
+        {
+            _site = new mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Site();
+        }
+
+        public bool IsAuthenticated
+        {
+            get
+            {
+                return HttpContext.Current.Request.IsAuthenticated;
+            }
+        }
+
+        public bool RequiresAuthentication
+        {
+            get
+            {
+                return !String.IsNullOrWhiteSpace(_site.Password) && !IsAuthenticated;
+            }
+        }
+
+        public bool Authenticate(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password) || _site.Password != password)
+            {
+                return false;
+            }
+            //FormsAuthentication.RedirectFromLoginPage(Guid.NewGuid().ToString(), false);
+            FormsAuthentication.SetAuthCookie(Guid.NewGuid().ToString(), false);
+            return true;
+        }
+
+        public void RevokeAuthentication()
+        {
+            FormsAuthentication.SignOut();
         }
     }
 

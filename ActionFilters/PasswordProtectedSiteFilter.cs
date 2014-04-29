@@ -11,7 +11,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var auth = new SessionBasedAuthenticationService();
+            //var auth = new SessionBasedAuthenticationService();
+            var auth = new FormsAuthenticationBasedAuthenticationService();
             if (auth.RequiresAuthentication)
             {
                 filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(

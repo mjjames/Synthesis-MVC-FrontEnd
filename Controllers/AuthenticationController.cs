@@ -20,7 +20,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         }
 
         public AuthenticationController()
-            : this(new SessionBasedAuthenticationService())
+            : this(new FormsAuthenticationBasedAuthenticationService())
         {
             
         }
