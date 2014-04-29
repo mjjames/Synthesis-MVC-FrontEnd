@@ -20,6 +20,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
             set;
         }
 
+        public IList<NavigationItem> BreadcrumbNavigation { get; set; }
+
         public string Title
         {
             get { return "404 Page Not Found"; }

@@ -65,6 +65,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 AccessKey = entity.accesskey,
                 Active = entity.active,
                 Body = entity.body,
+                BreadcrumbNavigation = _navs.GetBreadcrumbNavigationForPage(entity.page_key),
                 ChildNavigation = _navs.GetChildNavigationForPage(entity.page_key).ToList(),
                 FeaturedChildNavigation = _navs.GetChildFeaturedNavigationForPage(entity.page_key).ToList(),
                 FooterNavigation = _navs.GetFooterNavigation().ToList(),

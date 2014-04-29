@@ -13,6 +13,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models
 		public DateTime Date { get; set; }
 		public List<NavigationItem> MainNavigation { get; set; }
 		public IList<NavigationItem> FooterNavigation { get; set; }
+        public IList<NavigationItem> BreadcrumbNavigation { get; set; }
 		/// <summary>
 		/// All of the events for the provided date
 		/// </summary>

@@ -338,5 +338,31 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                         Url = BuildUrl(p)
                                     });
         }
+
+        internal IList<NavigationItem> GetBreadcrumbNavigationForPage(int pageKey)
+        {
+            var page = _pageRepository.Get(pageKey);
+            var navParts = new List<NavigationItem>();
+            GetNavParts(page, navParts);
+            navParts.Reverse();
+            return navParts;
+        }
+
+        private void GetNavParts(Page page, List<NavigationItem> navParts)
+        {
+            navParts.Add(new NavigationItem
+                                    {
+                                        Title = page.navtitle,
+                                        CssClass = "breadcrumbItem",
+                                        Description = page.metadescription,
+                                        ImageUrl = page.thumbnailimage,
+                                        PageKey = page.page_key,
+                                        Url = BuildUrl(page)
+                                    });
+            if (page.Page1 != null)
+            {
+                GetNavParts(page.Page1, navParts);
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Models.Interfaces
 	{
 		List<NavigationItem> MainNavigation { get; }
 		IList<NavigationItem> FooterNavigation { get; }
+        IList<NavigationItem> BreadcrumbNavigation { get; }
 		/// <summary>
 		/// The title that should be used for headings
 		/// </summary>
