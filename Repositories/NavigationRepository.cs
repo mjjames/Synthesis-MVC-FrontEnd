@@ -196,6 +196,86 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                     });
         }
 
+        internal IQueryable<NavigationItem> GetFeaturedNavigation()
+        {
+            //trim out any that don't have parent pages as these are invalid
+            return _pageRepository.FindAllActive()
+                                    .Where(p => p.showinfeaturednav.HasValue && p.showinfeaturednav.Value)
+                                    .ToList()
+                                    .Where(p => p.Page1 != null)
+                                    .AsQueryable()
+                                    .Select(p => new NavigationItem
+                                    {
+                                        Title = p.title,
+                                        CssClass = "featuredItem navItem",
+                                        Description = p.metadescription,
+                                        ImageUrl = p.thumbnailimage,
+                                        PageKey = p.page_key,
+                                        Url = BuildUrl(p)
+                                    });
+
+        }
+
+        internal IQueryable<NavigationItem> GetChildFeaturedNavigationForPage(int pageKey)
+        {
+            //trim out any that don't have parent pages as these are invalid
+            return _pageRepository.FindAllActive()
+                                    .Where(p => p.page_fkey == pageKey && p.showinfeaturednav.HasValue && p.showinfeaturednav.Value)
+                                    .ToList()
+                                    .Where(p => p.Page1 != null)
+                                    .AsQueryable()
+                                    .Select(p => new NavigationItem
+                                    {
+                                        Title = p.title,
+                                        CssClass = "featuredItem navItem",
+                                        Description = p.metadescription,
+                                        ImageUrl = p.thumbnailimage,
+                                        PageKey = p.page_key,
+                                        Url = BuildUrl(p)
+                                    });
+
+        }
+
+        internal IQueryable<NavigationItem> GetSecondaryFeaturedNavigation()
+        {
+            //trim out any that don't have parent pages as these are invalid
+            return _pageRepository.FindAllActive()
+                                    .Where(p => p.showinfeaturednav.HasValue && p.showinfeaturednav.Value)
+                                    .ToList()
+                                    .Where(p => p.Page1 != null)
+                                    .AsQueryable()
+                                    .Select(p => new NavigationItem
+                                    {
+                                        Title = p.title,
+                                        CssClass = "featuredItem navItem",
+                                        Description = p.metadescription,
+                                        ImageUrl = p.thumbnailimage,
+                                        PageKey = p.page_key,
+                                        Url = BuildUrl(p)
+                                    });
+
+        }
+
+        internal IQueryable<NavigationItem> GetChildSecondaryFeaturedNavigationForPage(int pageKey)
+        {
+            //trim out any that don't have parent pages as these are invalid
+            return _pageRepository.FindAllActive()
+                                    .Where(p => p.page_fkey == pageKey && p.showinsecondaryfeatured.HasValue && p.showinsecondaryfeatured.Value)
+                                    .ToList()
+                                    .Where(p => p.Page1 != null)
+                                    .AsQueryable()
+                                    .Select(p => new NavigationItem
+                                    {
+                                        Title = p.title,
+                                        CssClass = "featuredItem navItem",
+                                        Description = p.metadescription,
+                                        ImageUrl = p.thumbnailimage,
+                                        PageKey = p.page_key,
+                                        Url = BuildUrl(p)
+                                    });
+
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -233,6 +313,30 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
         private List<NavigationItem> GetChildren(Page page, string parentUrl, Func<Page, bool> filter)
         {
             return new List<NavigationItem>(BuildPageTree(parentUrl, page.Pages.Where(filter), (p, url) => GetChildren(p, Path.Combine(url, p.page_url), filter)));
+        }
+
+        internal IQueryable<NavigationItem> GetChildNavigationForPage(int pageKey)
+        {
+            return GetChildNavigation(pageKey, page => page.showinnav.HasValue && page.showinnav.Value ,"childItem navItem");
+        }
+
+        private IQueryable<NavigationItem> GetChildNavigation(int parentPageKey, Func<Page, bool> filter ,string cssClass)
+        {
+            return _pageRepository.FindAllActive()
+                                    .Where(p => p.page_fkey == parentPageKey)
+                                    .Where(filter)
+                                    .ToList()
+                                    .Where(p => p.Page1 != null)
+                                    .AsQueryable()
+                                    .Select(p => new NavigationItem
+                                    {
+                                        Title = p.title,
+                                        CssClass = cssClass,
+                                        Description = p.metadescription,
+                                        ImageUrl = p.thumbnailimage,
+                                        PageKey = p.page_key,
+                                        Url = BuildUrl(p)
+                                    });
         }
     }
 }

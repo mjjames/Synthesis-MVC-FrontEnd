@@ -3629,6 +3629,10 @@ namespace mjjames.DataEntities
 		
 		private string _pagetitle;
 		
+		private System.Nullable<bool> _showinsecondaryfeatured;
+		
+		private System.Nullable<bool> _linkurlispermenant;
+		
 		private EntitySet<Page> _Pages;
 		
 		private EntityRef<Site> _site;
@@ -3685,6 +3689,10 @@ namespace mjjames.DataEntities
     partial void Onsite_fkeyChanged();
     partial void OnpagetitleChanging(string value);
     partial void OnpagetitleChanged();
+    partial void OnshowinsecondaryfeaturedChanging(System.Nullable<bool> value);
+    partial void OnshowinsecondaryfeaturedChanged();
+    partial void OnlinkurlispermenantChanging(System.Nullable<bool> value);
+    partial void OnlinkurlispermenantChanged();
     #endregion
 		
 		public Page()
@@ -4159,6 +4167,46 @@ namespace mjjames.DataEntities
 					this._pagetitle = value;
 					this.SendPropertyChanged("pagetitle");
 					this.OnpagetitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_showinsecondaryfeatured", DbType="Bit")]
+		public System.Nullable<bool> showinsecondaryfeatured
+		{
+			get
+			{
+				return this._showinsecondaryfeatured;
+			}
+			set
+			{
+				if ((this._showinsecondaryfeatured != value))
+				{
+					this.OnshowinsecondaryfeaturedChanging(value);
+					this.SendPropertyChanging();
+					this._showinsecondaryfeatured = value;
+					this.SendPropertyChanged("showinsecondaryfeatured");
+					this.OnshowinsecondaryfeaturedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_linkurlispermenant", DbType="bit")]
+		public System.Nullable<bool> linkurlispermenant
+		{
+			get
+			{
+				return this._linkurlispermenant;
+			}
+			set
+			{
+				if ((this._linkurlispermenant != value))
+				{
+					this.OnlinkurlispermenantChanging(value);
+					this.SendPropertyChanging();
+					this._linkurlispermenant = value;
+					this.SendPropertyChanged("linkurlispermenant");
+					this.OnlinkurlispermenantChanged();
 				}
 			}
 		}

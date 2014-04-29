@@ -65,6 +65,8 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 AccessKey = entity.accesskey,
                 Active = entity.active,
                 Body = entity.body,
+                ChildNavigation = _navs.GetChildNavigationForPage(entity.page_key).ToList(),
+                FeaturedChildNavigation = _navs.GetChildFeaturedNavigationForPage(entity.page_key).ToList(),
                 FooterNavigation = _navs.GetFooterNavigation().ToList(),
                 LastModified = entity.lastmodified,
                 LinkURL = entity.linkurl,
@@ -78,6 +80,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                 PageID = entity.pageid ?? "",
                 Password = entity.password,
                 PasswordProtect = entity.passwordprotect,
+                SecondaryFeaturedChildNavigation = _navs.GetChildSecondaryFeaturedNavigationForPage(entity.page_key).ToList(),
                 Site = _site,
                 ShowInFeaturedNav = entity.showinfeaturednav,
                 ShowInFooter = entity.showinfooter,
@@ -100,6 +103,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                     Title = textInfo.ToTitleCase(m.title)
                                 })
             };
+            
             if (!String.IsNullOrEmpty(model.ThumbnailImage))
             {
                 model.ThumbnailImage = System.IO.Path.Combine(ConfigurationManager.AppSettings["uploaddir"], model.ThumbnailImage);

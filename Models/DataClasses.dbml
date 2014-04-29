@@ -179,6 +179,8 @@
       <Column Name="password" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="false" />
       <Column Name="pagetitle" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="showinsecondaryfeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="linkurlispermenant" Type="System.Boolean" DbType="bit" CanBeNull="true" />
       <Association Name="Page_Page" Member="Pages" ThisKey="page_key" OtherKey="page_fkey" Type="Page" />
       <Association Name="Site_Page" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
       <Association Name="Page_Page" Member="Page1" ThisKey="page_fkey" OtherKey="page_key" Type="Page" IsForeignKey="true" />

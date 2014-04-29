@@ -8,6 +8,7 @@ using mjjames.MVC_MultiTenant_Controllers_and_Models.Models;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.Models.DTO;
 using System.Globalization;
 using mjjames.MVC_MultiTenant_Controllers_and_Models.ActionFilters;
+using System.Collections.Generic;
 
 namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 {
@@ -84,12 +85,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 			{
 				Response.Redirect(model.LinkURL, true);
 			}
-            var navItem = model.MainNavigation.FirstOrDefault(n => Request.Url.PathAndQuery.StartsWith(n.Url) && n.Url != _site.UrlBase);
-            if (navItem != null)
-            {
-                model.ChildNavigation = navItem.ChildPages;
-            }
-			
+  			
 			//default to the page template
 			var templateName = "Page";
 
