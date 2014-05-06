@@ -97,6 +97,10 @@
     <Compile Include="ActionFilters\PasswordProtectedSiteFilter.cs" />
     <Compile Include="ActionFilters\RecaptchaFilter.cs" />
     <Compile Include="ActionResults\RSSActionResult.cs" />
+    <Compile Include="Controllers\SiteSearchController.cs" />
+    <Compile Include="Models\DTO\SiteSearchResultDto.cs" />
+    <Compile Include="Models\SiteSearchModel.cs" />
+    <Compile Include="Repositories\SiteSearchRepository.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="ConfigurationManagerSiteSettings.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
