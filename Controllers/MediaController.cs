@@ -32,28 +32,58 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
             return View(viewName, orderedBanners.Take(number));
         }
 
-        [ChildActionOnly]
-        public ActionResult Downloads(string viewName = "Downloads")
-        {
-            var downloads = _mediaRepository.GetByLookupID(MediaType.Download.ToString())
-                                               .OrderByDescending(o => o.media_key)
-                                               .Select(m => new
-                                               {
-                                                   Description = m.description,
-                                                   FileName = m.filename,
-                                                   Title = m.title,
-                                                   KeyValues = _keyvalueRepository.ByLink(m.media_key, "medialookup")
-                                               });
 
-            var dtos = downloads.Take(4).ToList().Select(d => new DownloadDto
+        [ChildActionOnly]
+        public ActionResult CustomDownloads(string lookupId, int number, string viewName = "CustomDownloads", DateTime? startDate = null, DateTime? endDate = null)
+        {
+
+            var downloads = _mediaRepository.GetByLookupID(lookupId)
+                                            .Where(GetFilter(startDate, endDate))
+                                              .OrderByDescending(o => o.media_key)
+                                              .Take(number)
+                                              .Select(m => new
+                                              {
+                                                  Description = m.description,
+                                                  FileName = m.filename,
+                                                  Title = m.title,
+                                                  Published = m.publishedonutc,
+                                                  KeyValues = _keyvalueRepository.ByLink(m.media_key, "medialookup")
+                                              });
+
+            var dtos = downloads.ToList().Select(d => new DownloadDto
             {
                 Description = d.Description,
                 FileName = d.FileName,
                 Title = d.Title,
+                Published = d.Published,
                 KeyValues = d.KeyValues.ToDictionary(kv => kv.lookup.lookup_id, kv => new KeyValueDto(kv.keyvalue_key, kv.lookup.title, kv.value))
             });
 
             return View(viewName, dtos.AsEnumerable());
+        }
+
+        private System.Linq.Expressions.Expression<Func<DataEntities.Media, bool>> GetFilter(DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                return m => m.publishedonutc >= startDate.Value && m.publishedonutc <= endDate.Value;
+            }
+            if (startDate.HasValue)
+            {
+                return m => m.publishedonutc >= startDate.Value;
+            }
+            if (endDate.HasValue)
+            {
+                return m => m.publishedonutc <= endDate.Value;
+            }
+            return m => true;
+        }
+
+
+        [ChildActionOnly]
+        public ActionResult Downloads(string viewName = "Downloads")
+        {
+            return CustomDownloads(MediaType.Download.ToString(), 4, viewName);
         }
 
         [PasswordProtectedSiteFilter]

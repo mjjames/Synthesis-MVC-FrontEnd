@@ -98,6 +98,7 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="link" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="site_fkey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="publishedonutc" Type="System.DateTime" DbType="Date" CanBeNull="false" />
       <Association Name="Media_MediaLink" Member="MediaLinks" Storage="_media_links" ThisKey="media_key" OtherKey="media_fkey" Type="MediaLink" />
       <Association Name="Lookup_Media" Member="Lookup" Storage="_lookup" ThisKey="mediatype_lookup" OtherKey="lookup_key" Type="Lookup" IsForeignKey="true" />
       <Association Name="Site_Media" Member="Site" Storage="_site" ThisKey="site_fkey" OtherKey="site_key" Type="Site" IsForeignKey="true" />
