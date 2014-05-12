@@ -18,15 +18,19 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
     {
         private ISiteSearchRepository _siteSearchRepository;
         private Site _site;
+        private NavigationRepository _navigation;
         public SiteSearchController()
         {
             _site = new Site();
             _siteSearchRepository = new SiteSearchRepository(new PageRepository(_site), new ArticleRepository(), new ProjectRepository(), new MediaRepository(), new DatabaseSiteSettings(_site));
+            _navigation = new NavigationRepository();
         }
 
-        public SiteSearchController(ISiteSearchRepository siteSearchRepository)
+        public SiteSearchController(ISiteSearchRepository siteSearchRepository, Site site, NavigationRepository navigationRepository)
         {
             _siteSearchRepository = siteSearchRepository;
+            _navigation = navigationRepository;
+            _site = site;
         }
 
         [HttpGet]
@@ -38,18 +42,24 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
                 SearchTerm = searchTerm,
                 Results = results,
                 Site = _site,
-                BreadcrumbNavigation = new List<NavigationItem>(new []{
+                PageTitle = string.Format("Search Results for {0}, {1} items returned", searchTerm, results.Count),
+                Title = "Search Results",
+                BreadcrumbNavigation = new List<NavigationItem>(new[]{
                     new NavigationItem{
                         Title = "Home",
                         Url = "/"
                     },
                     new NavigationItem{
-                        Title = "Search Results",
-                        Url= "/search/process" //todo: fix
+                        Title = "Search Results: " + searchTerm,
+                        Url= Url.RouteUrl(new {
+                         controller = "SiteSearch",
+                         action="search",
+                         searchTerm = searchTerm
+                        })
                     }
                 }),
-                MainNavigation = new List<NavigationItem>(),
-                FooterNavigation = new List<NavigationItem>()
+                MainNavigation = _navigation.GetMainNavigation().ToList(),
+                FooterNavigation = _navigation.GetFooterNavigation().ToList()
             });
         }
     }
