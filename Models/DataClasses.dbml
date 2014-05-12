@@ -3,7 +3,7 @@
   <Table Name="dbo.articles" Member="Articles">
     <Type Name="Article">
       <Column Name="article_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="showonhome" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="shortdescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
@@ -91,7 +91,7 @@
   <Table Name="dbo.media" Member="Medias">
     <Type Name="Media">
       <Column Name="media_key" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="filename" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="mediatype_lookup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -164,7 +164,7 @@
       <Column Name="accesskey" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
       <Column Name="metadescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="metakeywords" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="thumbnailimage" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="showinnav" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
