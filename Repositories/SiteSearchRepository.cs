@@ -33,6 +33,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
         public IList<SiteSearchResultDto> Search(string searchTerm)
         {
             var results = new List<SiteSearchResultDto>();
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return results;
+            }
             //eeee need some free text love
             results.AddRange(GetPageResults(searchTerm));
 
@@ -50,7 +54,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
             {
                 results.AddRange(GetMediaResults(searchTerm, _siteSettings.GetSetting<string>("SiteSearch:MediaTypeIds").Split(',')));
             }
-            return results;
+            return results.OrderBy(r => r.Title).ThenByDescending(r => r.Published.Value).ToList();
         }
 
         private IEnumerable<SiteSearchResultDto> GetMediaResults(string searchTerm, string[] mediaTypeIds)
@@ -101,7 +105,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
                                                 Description = p.metadescription,
                                                 Published = p.lastmodified,
                                                 Title = p.title,
-                                                Url = p.page_url,
+                                                Url = string.IsNullOrWhiteSpace(p.linkurl) ? p.page_url : p.linkurl,
                                             }).ToList();
         }
     }
