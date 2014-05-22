@@ -16,7 +16,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Factories
 		/// </summary>
 		/// <param name="calendarUrl">URL to the calendar feed</param>
 		/// <returns></returns>
-		public static IGoogleCalendar GetCalendarInstance(string calendarUrl)
+		public static IGoogleCalendar GetCalendarInstance(string calendarUrl, bool singleEventsOnly = false)
 		{
 
 			//if in debug mode and no url provided always return the test wrapper which has sample data
@@ -27,7 +27,7 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Factories
 
 
 			//return the full Google Calendar Wrappeer
-			return new GoogleCalendar(calendarUrl);
+			return new GoogleCalendar(calendarUrl, singleEventsOnly);
 		}
 	}
 }

@@ -40,7 +40,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
             {
                 date = DateTime.Now;
             }
-            var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL"), date, date.AddMonths(1));
+            var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendar:FeedURL"), 
+                                            date, 
+                                            date.AddMonths(1),
+                                            _siteSettings.GetSetting<bool>("GoogleCalendar:SingleEventsOnly")
+                                            );
             var entry = String.IsNullOrWhiteSpace(eventID) ? events.FirstOrDefault(e => e.Start > DateTime.Today) : events.FirstOrDefault(e => e.Identifier.Equals(eventID));
 
             //if we don't have a valid entry and we have been provided an event ID return a 404
@@ -81,9 +85,9 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public ActionResult CalendarList(string feedURL, DateTime startDate, DateTime endDate)
+        public ActionResult CalendarList(string feedURL, DateTime startDate, DateTime endDate, bool singleEventsOnly = false)
         {
-            var eventEntries = GetCalendarEvents(feedURL, startDate, endDate);
+            var eventEntries = GetCalendarEvents(feedURL, startDate, endDate, singleEventsOnly);
             if (eventEntries.Count() == 0)
             {
                 eventEntries.Add(new CalendarEntryDTO { Title = "Event Information Unavailable at this time" });
@@ -95,19 +99,20 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         [ChildActionOnly]
         public ActionResult Month(string startDate)
         {
-            var feedUrl = _siteSettings.GetSetting<string>("GoogleCalendarFeedURL");
-            return MonthCustomFeed(startDate, feedUrl);
+            var feedUrl = _siteSettings.GetSetting<string>("GoogleCalendar:FeedURL");
+            var singleEventsOnly = _siteSettings.GetSetting<bool>("GoogleCalendar:SingleEventsOnly");
+            return MonthCustomFeed(startDate, feedUrl, singleEventsOnly);
         }
 
         [ChildActionOnly]
-        public ActionResult MonthCustomFeed(string startDate, string feedUrl)
+        public ActionResult MonthCustomFeed(string startDate, string feedUrl, bool singleEventsOnly = false)
         {
             var date = new DateTime();
             if (!DateTime.TryParseExact(startDate, "yyyy-MM", new CultureInfo("en-GB"), DateTimeStyles.None, out date))
             {
                 date = DateTime.Now;
             }
-            var events = GetCalendarEvents(feedUrl, date, date.AddMonths(1));
+            var events = GetCalendarEvents(feedUrl, date, date.AddMonths(1), singleEventsOnly);
             if (!events.Any())
             {
                 events.Add(new CalendarEntryDTO { Title = "Event Information Unavailable at this time" });
@@ -128,7 +133,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         public ActionResult ThisWeek()
         {
             ViewBag.Site = _site;
-            var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL"), DateTime.Today, DateTime.Today.AddDays(6));
+            var events = GetCalendarEvents(_siteSettings.GetSetting<string>("GoogleCalendar:FeedURL"), 
+                                            DateTime.Today, 
+                                            DateTime.Today.AddDays(6),
+                                            _siteSettings.GetSetting<bool>("GoogleCalendar:SingleEventsOnly")
+                                            );
             return View(events);
         }
 
@@ -140,7 +149,10 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         public ActionResult WhatsOnNext()
         {
             //get our  next event entry
-            var eventEntry = ExternalModulesFactory.GetCalendarInstance(_siteSettings.GetSetting<string>("GoogleCalendarFeedURL")).GetNextEvent();
+            var eventEntry = ExternalModulesFactory.GetCalendarInstance(
+                _siteSettings.GetSetting<string>("GoogleCalendar:FeedURL"),
+                _siteSettings.GetSetting<bool>("GoogleCalendar:SingleEventsOnly")
+                ).GetNextEvent();
             //convert the eventEntry into a CalendarEntry
             var whatsonNext = new CalendarEntryDTO();
 
@@ -164,10 +176,11 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
         }
 
 
-        private static List<CalendarEntryDTO> GetCalendarEvents(string feedURL, DateTime startDate, DateTime endDate)
+        private static List<CalendarEntryDTO> GetCalendarEvents(string feedURL, DateTime startDate, DateTime endDate, bool singleEventsOnly = false)
         {
+            startDate = new DateTime(2014, 05, 12);
             //get a custom range view of events
-            var eventEntries = ExternalModulesFactory.GetCalendarInstance(feedURL)
+            var eventEntries = ExternalModulesFactory.GetCalendarInstance(feedURL, singleEventsOnly)
                 .GetEvents(startDate, endDate);
 
             //we cant just spit out event entries

@@ -41,15 +41,15 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="mjjames.BibleGateway">
-      <HintPath>packages\mjjames.BibleGateway.1.1\lib\net45\mjjames.BibleGateway.dll</HintPath>
+      <HintPath>..\..\MJJames\WebSites\bsipc\BSIPC\packages\mjjames.BibleGateway.1.2\lib\mjjames.BibleGateway.dll</HintPath>
     </Reference>
     <Reference Include="mjjames.core, Version=1.1.4862.17052, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\mjjames.Core.1.1\lib\net35\mjjames.core.dll</HintPath>
     </Reference>
-    <Reference Include="mjjames.GoogleCalendarWrapper, Version=1.1.4862.17143, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="mjjames.GoogleCalendarWrapper, Version=1.2.5255.38259, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\mjjames.GoogleCalendarWrapper.1.1\lib\net45\mjjames.GoogleCalendarWrapper.dll</HintPath>
+      <HintPath>..\..\MJJames\WebSites\bsipc\BSIPC\packages\mjjames.GoogleCalendarWrapper.1.2\lib\net45\mjjames.GoogleCalendarWrapper.dll</HintPath>
     </Reference>
     <Reference Include="mjjames.Imaging, Version=1.0.4862.16729, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -198,7 +198,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
