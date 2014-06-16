@@ -178,7 +178,6 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Controllers
 
         private static List<CalendarEntryDTO> GetCalendarEvents(string feedURL, DateTime startDate, DateTime endDate, bool singleEventsOnly = false)
         {
-            startDate = new DateTime(2014, 05, 12);
             //get a custom range view of events
             var eventEntries = ExternalModulesFactory.GetCalendarInstance(feedURL, singleEventsOnly)
                 .GetEvents(startDate, endDate);
