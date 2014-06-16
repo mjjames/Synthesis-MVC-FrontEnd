@@ -317,16 +317,19 @@ namespace mjjames.MVC_MultiTenant_Controllers_and_Models.Repositories
 
         internal IQueryable<NavigationItem> GetChildNavigationForPage(int pageKey)
         {
-            return GetChildNavigation(pageKey, page => page.showinnav.HasValue && page.showinnav.Value ,"childItem navItem");
+            return GetChildNavigation(pageKey, page => page.showinnav.HasValue && page.showinnav.Value ,"childItem navItem", page => page.sortorder);
         }
 
-        private IQueryable<NavigationItem> GetChildNavigation(int parentPageKey, Func<Page, bool> filter ,string cssClass)
+        private IQueryable<NavigationItem> GetChildNavigation<TKey>(int parentPageKey, Func<Page, bool> filter ,string cssClass, Func<Page,TKey> sort)
         {
             return _pageRepository.FindAllActive()
                                     .Where(p => p.page_fkey == parentPageKey)
                                     .Where(filter)
+                                    .OrderBy(sort)
+                                    .ThenBy(p => p.title)
                                     .ToList()
                                     .Where(p => p.Page1 != null)
+                                    .OrderBy(sort)
                                     .AsQueryable()
                                     .Select(p => new NavigationItem
                                     {
